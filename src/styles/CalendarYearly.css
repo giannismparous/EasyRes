@@ -1,0 +1,25 @@
+.calendar-yearly-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 1001;
+    position: static;
+}
+
+.calendar-yearly {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to next row */
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+}
+
+.calendar-yearly-container h2 {
+    margin-top: 10px;
+    color: white;
+}
+
+.calendar-yearly-container h2::after {
+    background-color: transparent;
+}

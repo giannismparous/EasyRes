@@ -1,0 +1,47 @@
+.dropdown {
+    position: fixed; /* Position the dropdown menu relative to the viewport */
+    top: 10px; /* Align the dropdown menu to the top of the viewport */
+    left: 10px; /* Align the dropdown menu to the left of the viewport */
+    z-index: 500; /* Ensure that the dropdown menu appears above other elements */
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    gap: 10px;
+    padding-top: 5px;
+  }
+
+  @media screen and (max-width: 450px) {
+    .dropdown {
+      top: 60px;
+      left: 13px;
+    }
+  
+  }
+  
+  .dropdown.closed {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    transition: none; /* Disable transitions for closing */
+  }
+  
+  .dropdown.open {
+    border-radius: 999px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+    background-color: white;
+    transition: border-radius 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Enable transitions for opening */
+  }
+  
+  .dropdown button {
+    background-color: transparent;
+    color: black;
+    border: none; /* Remove button border */
+    margin: 0; /* Remove default button margins */
+    padding-left: 12px; /* Add some padding for button content */
+  }
+
+.dropdown.open .reservations-button.active, .dropdown.open .orders-button.active, .dropdown.open .dots-button.active {
+    background-color: #007bff; /* Set border color to blue when active */
+    border-radius: 9999px;
+}
+  

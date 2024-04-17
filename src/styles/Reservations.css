@@ -1,0 +1,543 @@
+.reservations-page {
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+}
+
+.reservations-container {
+    margin: 20px;
+}
+
+
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reservations {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top:100px;
+}
+
+.reservation {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0; /* Adjust margin to create space between reservations */
+    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    background-color: white;
+}
+
+.reservation h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.reservation-details-container {
+    display: flex; /* Use flexbox */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if they don't fit horizontally */
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.reservation-details {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px; /* Add margin between reservation details */
+    background-color: #d0d0d0;
+}
+
+.reservation-details ul li{
+    /* list-style-type: circle; */
+}
+
+.reservation-details ul li{
+    color: rgb(0,9,128);
+}
+
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Take up full width of the screen */
+    position: fixed;
+    z-index: 100;
+}
+
+.reservations-container h2{
+    color: black;
+}
+
+/* .reservations-container h2:after {
+    background-color: #000;
+    border-radius: 2.5px;
+    bottom: -6px;
+    content: "";
+    display: block;
+    height: 5px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+} */
+
+.toggle-button {
+    width: 30px; /* Set width and height to the same value for a round button */
+    height: 30px; /* Same value as width to make it round */
+    margin-left: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.search-bar {
+    margin-top:22px;
+    position: relative; /* Set position to relative */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: center;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.search-input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+    font-size: 16px;
+}
+
+.clear-button,
+.sort-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: auto;
+    color: black;
+}
+
+.clear-button:hover,
+.sort-button:hover {
+    color: #007bff; /* Change this to your desired color */
+    background-color: transparent;
+}
+
+.clear-button {
+    position: absolute; /* Set position to absolute */
+    top: 50%; /* Position the button vertically at the center */
+    right: 30px; /* Position the clear button on the right side with some space */
+    transform: translateY(-50%); /* Adjust vertical position */
+}
+
+.sort-button {
+    position: absolute; /* Set position to absolute */
+    top: 50%; /* Position the button vertically at the center */
+    right: 0px; /* Position the clear button on the right side with some space */
+    transform: translateY(-50%); /* Adjust vertical position */
+    margin-left: 10px; /* Add margin between clear button and sort button */
+    width: auto;
+}
+
+.sort-button:hover {
+    background-color: transparent; /* Change background color to transparent on hover */
+}
+
+.sort-button img {
+    width: 20px;
+    margin: 0;
+}
+
+.sort-menu {
+    position: absolute; /* Set position to absolute */
+    top: calc(100% + 5px); /* Position the menu below the sort button with a small gap */
+    right: 0; /* Align the menu with the right edge of the sort button */
+    background-color: #fff; /* Set background color */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Add border radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+    z-index: 1; /* Ensure the menu is above other content */
+}
+
+/* Add styles for the sort options */
+.sort-option {
+    padding: 10px; /* Add padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.sort-option:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}
+
+
+/* Add styles to show the sort menu when it's open */
+.sort-menu.open {
+    display: block;
+}
+
+.sort-label {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.sort-label h2 {
+    text-align: center;
+}
+
+.sort-label h2::after {
+    background-color: transparent;
+}
+
+.cancel-button {
+    background-color: none;
+    color: red;
+}
+
+/* Add styles to show the sort menu when it's open */
+.canceled {
+    background-color: red;
+}
+
+.canceled-text {
+    color: red;
+}
+
+.accept-button {
+    color: white;
+    background-color: green;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    border: none;
+}
+
+.cancel-button {
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    border: none;
+}
+
+.completed {
+    background-color: green;
+}
+
+.completed-text {
+    color: green;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.t {
+    width: 100%;
+}
+
+.calendar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: linear-gradient(to top left, #460000, #301f01); */
+    background: linear-gradient(to top left, #007bff, rgb(0, 6, 80));
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none; /* Add this to prevent clicks on the overlay when it's not visible */
+    transition: opacity 0.5s ease-out; /* Add a transition for a smooth fade effect */
+  }
+  
+.calendar-overlay.visible {
+    opacity: 1;
+}
+
+.calendar-button {
+background-color: transparent; /* Set the background color to transparent */
+border: none;
+z-index: 2000;
+position: fixed;
+width: auto;
+padding: 0;
+margin-top: 0px;
+margin-left: 85px;
+/* Add any additional styling as needed */
+}
+
+.calendar-button:hover{
+    background-color: transparent;
+}
+
+.calendar-button img {
+width: 80px ;
+margin: 0;
+/* Add any additional styling as needed */
+}
+
+.dots-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    width: auto;
+    /* z-index: 2000;
+    position: fixed;
+    width: auto;
+    margin-left: 70px; */
+    /* Add any additional styling as needed */
+}
+
+.dots-button:hover{
+    background-color: transparent;
+}
+
+.dots-button img {
+width: 72px ;
+height: 72px;
+margin: 0;
+/* Add any additional styling as needed */
+}
+
+.reservations-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    width: auto;
+    width: auto;
+    /* z-index: 2000;
+    position: fixed;
+    width: auto;
+    margin-left: 70px; */
+    /* Add any additional styling as needed */
+}
+    
+.reservations-button:hover{
+    background-color: transparent;
+}
+
+.reservations-button img {
+width: 70px ;
+height: 75px;
+margin: 0;
+/* Add any additional styling as needed */
+}
+
+.orders-button {
+background-color: transparent; /* Set the background color to transparent */
+border: none;
+width: auto;
+/* z-index: 2000;
+position: fixed;
+width: auto;
+margin-left: 130px; */
+/* Add any additional styling as needed */
+}
+
+.orders-button:hover{
+    background-color: transparent;
+}
+
+.orders-button img {
+width: 75px ;
+margin: 0;
+/* Add any additional styling as needed */
+}
+
+.no-reservations {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+    width: 100%;
+}
+
+@media screen and (max-width: 700px) {
+
+    
+    .search-bar {
+        position: fixed; /* Set position to relative */
+        display: flex;
+        justify-content: flex-end;
+        width: 300px;
+        margin-bottom: 20px;
+        right:50px
+    }
+    
+    .search-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+
+    .calendar-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        z-index: 2000;
+        position: fixed;
+        left: 5px;
+        /* Add any additional styling as needed */
+    }
+
+    .calendar-button img {
+        width: 60px;
+    }
+
+    .dots-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .dots-button img {
+        height: 50px;
+        width: 60px;
+    }
+
+    .reservations-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .reservations-button img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .orders-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .orders-button img {
+        width: 60px;
+    }
+
+    .search-bar-container {
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+        width: 70%; /* Take up full width of the screen */
+        position: fixed;
+        top: 0; /* Position fixed from the top */
+        right: 0; /* Align to the right */
+    }
+    
+    .search-bar {
+        margin-top: 33px;
+        position: relative; /* Set position to relative */
+        display: flex;
+        align-items: center; /* Align items vertically */
+        justify-content: center;
+        width: 250px;
+        margin-bottom: 20px;
+        right: 40px;
+    }
+    
+    .search-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .calendar-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        z-index: 2000;
+        position: fixed;
+        left: -68px;
+        top: 17px;
+        /* Add any additional styling as needed */
+    }
+
+    .calendar-button img {
+        width: 45px;
+    }
+
+    .dots-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .dots-button img {
+        height: 27px;
+        width: 30px;
+    }
+
+    .reservations-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .reservations-button img {
+        width: 27px;
+        height: 27px;
+    }
+
+    .orders-button {
+        background-color: transparent; /* Set the background color to transparent */
+        border: none;
+        /* Add any additional styling as needed */
+    }
+
+    .orders-button img {
+        width: 27px;
+    }
+
+    .search-bar-container {
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+        width: 200px; /* Take up full width of the screen */
+        position: fixed;
+        top: 0; /* Position fixed from the top */
+        right: 0; /* Align to the right */
+    }
+    
+    .search-bar {
+        margin-top: 33px;
+        position: relative; /* Set position to relative */
+        display: flex;
+        align-items: center; /* Align items vertically */
+        justify-content: center;
+        width: 300px;
+        margin-bottom: 20px;
+        bottom: 12px;
+        right: 30px;
+    }
+    
+    .search-input {
+        flex: 1;
+        padding: 120px;
+        border: 1px solid #ccc;
+        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        font-size: 12px;
+    }
+}
+
+.table-header {
+    text-align: center;
+}
