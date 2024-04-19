@@ -1,5 +1,5 @@
 {
-  "homepage": "https://giannismparous.github.io",
+  "homepage": "https://giannismparous.github.io/EasyRes",
   "name": "easy-res",
   "version": "0.1.0",
   "private": true,
@@ -22,8 +22,7 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
