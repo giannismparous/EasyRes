@@ -1,61 +1,26 @@
 {
-  "homepage": "https://giannismparous.github.io/",
+  "homepage": "https://giannismparous.github.io",
   "name": "easy-res",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/free-brands-svg-icons": "^6.4.2",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
-    "@react-spring/parallax": "^9.7.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "emailjs-com": "^3.2.0",
-    "firebase": "^10.8.0",
-    "gsap": "^3.12.5",
-    "hamburger-react": "^2.5.0",
+    "firebase": "^10.11.0",
     "react": "^18.2.0",
-    "react-card-flip": "^1.2.2",
     "react-dom": "^18.2.0",
-    "react-gtm-module": "^2.0.11",
     "react-helmet-async": "^2.0.4",
-    "react-icons": "^5.0.1",
-    "react-responsive": "^10.0.0",
-    "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.19.0",
+    "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
-    "react-slideshow-image": "^4.3.0",
-    "react-snap": "^1.23.0",
     "react-spinners": "^0.13.8",
-    "react-spring": "^9.7.3",
-    "react-text-transition": "^3.1.0",
-    "react-visibility-sensor": "^5.1.1",
-    "split-text-js": "^1.0.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "skipThirdPartyRequests": true,
-    "puppeteer": {
-      "timeout": 1200000
-    },
-    "puppeteerArgs": [
-      "--no-sandbox",
-      "--disable-setuid-sandbox"
-    ]
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -74,8 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1"
   }
 }

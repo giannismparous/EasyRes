@@ -14,10 +14,8 @@ import Debug from "./components/Debug";
 import './styles/global.css';
 
 function App() {
-
-  
   return (
-    <div>
+    <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/debug" element={<Debug />} />
