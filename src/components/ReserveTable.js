@@ -6,7 +6,7 @@ import { ClockLoader } from 'react-spinners';
 
 const ReserveTable = () => {
 
-    const {collectionKey, reservationDate, reservationStartTimeIndex, reservationEndTimeIndex, tableNumber } = useParams();
+    const {collectionKey, reservationDate, reservationStartTimeIndex, reservationEndTimeIndex, tableNumber, people } = useParams();
     const [startTime, setStartTime] = useState();
     const [endTime, setEndTime] = useState();
     const [name, setName] = useState("");
@@ -16,6 +16,11 @@ const ReserveTable = () => {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [notes, setNotes] = useState('');
+    const [smokes, setSmokes] = useState(false);
+
+    const handleSmokesCheckboxChange = () => {
+        setSmokes(!smokes);
+    };
 
     useEffect(() => {
 
@@ -45,8 +50,9 @@ const ReserveTable = () => {
             console.log(tableNumber)
             console.log(reservationStartTimeIndex)
             console.log(reservationEndTimeIndex)
+            console.log(people)
             // Call updateTableSchedule with the appropriate parameters
-            await addNewReservation(collectionKey, reservationDate, parseInt(reservationStartTimeIndex), parseInt(reservationEndTimeIndex), parseInt(tableNumber), fullName, phone, email, notes);
+            await addNewReservation(collectionKey, reservationDate, parseInt(reservationStartTimeIndex), parseInt(reservationEndTimeIndex), parseInt(tableNumber), fullName, phone, email, notes, parseInt(people), smokes);
             // Optionally, you can redirect the user to a confirmation page or do other actions upon successful reservation
             console.log('Table reserved successfully!');
             setBookedReservation(true);
@@ -108,6 +114,10 @@ const ReserveTable = () => {
                             <label htmlFor="userNotes">Notes:</label>
                             <input type="text" id="userNotes" value={notes} onChange={handleNotesChange} />
                         </p>
+                        <label>
+                            <input type="checkbox" name="smokes" checked={smokes} onChange={handleSmokesCheckboxChange} />
+                            Smokes
+                        </label>
                         <p className="confirmation-text">Are you sure you want to reserve?</p>
                         <div className="button-container">
                             <button className="yes-button" onClick={handleYesClick} disabled={fullName.trim() === "" || (phone.trim() === "" && email.trim() === "")}>Yes</button>

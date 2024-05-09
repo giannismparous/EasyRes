@@ -77,6 +77,10 @@
     background-color: #007bff; 
 }
 
+.unavailable-day {
+    background-color: red;
+}
+
 /* Media query for screens smaller than 495px */
 @media screen and (max-width: 495px) {
     /* Calendar.css */

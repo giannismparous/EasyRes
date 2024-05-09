@@ -1,109 +1,109 @@
 .calendar-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .calendar-button-red {
-    background-color: #ff7f7f;
-  }
-  
-  .calendar-button-green {
-    background-color: #7fff7f;
-  }
-  
-  .grayed-out {
-    background-color: #cccccc; /* Gray color for grayed-out buttons */
-  }
-  
-  button:hover:not(.grayed-out) {
-    filter: brightness(70%);
-  }
-  
-  .confirmation-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    z-index: 999; /* Ensure it's above other content */
-  }
-  
-  .confirmation-popup p {
-    color: black;
-    margin-bottom: 15px;
-  }
-  
-  .calendar-buttons button {
-    border: none;
-    border-radius: 10px;
-    padding: 15px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-  .confirmation-popup button {
-    border: none;
-    border-radius: 10px;
-    padding: 15px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .confirmation-popup button:hover {
-    filter: brightness(90%);
-  }
-  
-  .confirmation-popup div {
-    text-align: right;
-  }
+.calendar-button-red {
+  background-color: #ff7f7f;
+}
+
+.calendar-button-green {
+  background-color: #7fff7f;
+}
+
+.grayed-out {
+  background-color: #cccccc; /* Gray color for grayed-out buttons */
+}
+
+button:hover:not(.grayed-out) {
+  filter: brightness(70%);
+}
+
+.confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  z-index: 999; /* Ensure it's above other content */
+}
+
+.confirmation-popup p {
+  color: black;
+  margin-bottom: 15px;
+}
+
+.calendar-buttons button {
+  border: none;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.confirmation-popup button {
+  border: none;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.confirmation-popup button:hover {
+  filter: brightness(90%);
+}
+
+.confirmation-popup div {
+  text-align: right;
+}
 
 /* 
 
 */
 
 .reserve-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 20px;
+padding-top: 20px;
+padding-bottom: 20px;
 }
 
 .reserve-container h2{
-  
-  color: rgb(0, 9, 128);
+
+color: rgb(0, 9, 128);
 }
 
 .reserve-container h2::after{
-  background-color: transparent;
+background-color: transparent;
 }
 
 .reserve-container button {
-  width: 185px;
-  background-color: #d0d0d0;
-  color: rgb(0, 9, 128);
-  font-size: 24px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
-  /* border: 2px solid #007bff;  */
-  padding: 20px;
-  font-family: "Josefin Sans", sans-serif;
+width: 185px;
+background-color: #d0d0d0;
+color: rgb(0, 9, 128);
+font-size: 24px;
+border-radius: 9999px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
+/* border: 2px solid #007bff;  */
+padding: 20px;
+font-family: "Josefin Sans", sans-serif;
 }
 
 .select-capacity-dropdown {
-  width: 100px;
-  font-size: 24px;
-  font-family: "Josefin Sans", sans-serif;
-  text-align: center;
-  margin-bottom: 50px;
+width: 100px;
+font-size: 24px;
+font-family: "Josefin Sans", sans-serif;
+text-align: center;
+margin-bottom: 50px;
 }

@@ -388,68 +388,288 @@ const infoDoc = {
     unavailable_days:[
         "3-4-2024", 
         "5-4-2024",
+        "2-1-2024"
     ],
     tables: [
         {
             id: 1,
-            capacity: 4
+            capacity: 4,
+            smokeFriendly: true
         },
         {
             id: 2,
-            capacity: 3
+            capacity: 3,
+            smokeFriendly: true
         },
         {
             id: 3,
-            capacity: 2
+            capacity: 2,
+            smokeFriendly: true
         },
         {
             id: 4,
-            capacity: 2
+            capacity: 2,
+            smokeFriendly: false
         },
         {
             id: 5,
-            capacity: 4
+            capacity: 4,
+            smokeFriendly: false
         },
         {
             id: 6,
-            capacity: 6
+            capacity: 6,
+            smokeFriendly: true
         },
         {
             id: 7,
-            capacity: 4
+            capacity: 4,
+            smokeFriendly: true
         },
         {
             id: 8,
-            capacity: 3
+            capacity: 3,
+            smokeFriendly: false
         },
         {
             id: 9,
-            capacity: 7
+            capacity: 7,
+            smokeFriendly: true
         },
         {
             id: 10,
-            capacity: 5
+            capacity: 5,
+            smokeFriendly: false
+
         },
     ],
     menu: [
         {
-            id:1,
-            name:"Chicken Filet",
-            price: 12
+            category:"Main Dishes",
+            items:[
+                {
+                    id:1,
+                    name:"Chicken filet",
+                    price: 12
+                },
+                {
+                    id:2,
+                    name:"Greek salad",
+                    price: 9
+                },
+                {
+                    id:3,
+                    name:"Gemista",
+                    price: 8
+                },
+                {
+                    id:4,
+                    name:"Rooster with red sauce",
+                    price: 10
+                },
+                {
+                    id:5,
+                    name:"Patsitsio",
+                    price: 6.5
+                },
+                {
+                    id:6,
+                    name:"Beef with rice",
+                    price: 8
+                },
+                {
+                    id:7,
+                    name:"Beetroot soup",
+                    price: 6.5
+                },
+                {
+                    id:8,
+                    name:"Steak with fried potatoes",
+                    price: 8
+                },
+                {
+                    id:9,
+                    name:"Fajitas",
+                    price: 12
+                },
+                {
+                    id:10,
+                    name:"Enchiladas",
+                    price: 8
+                },
+                {
+                    id:11,
+                    name:"Francesinha",
+                    price: 12
+                },
+                {
+                    id:12,
+                    name:"Bacalhau a bras",
+                    price: 15
+                }
+                ,
+                {
+                    id:13,
+                    name:"Pizza",
+                    price: 12
+                }
+                ,
+                {
+                    id:14,
+                    name:"Burger with beef",
+                    price: 12
+                },
+                {
+                    id:15,
+                    name:"Burger with chicken",
+                    price: 13
+                }
+            ]
         },
         {
-            id:2,
-            name:"Saganaki",
-            price: 6
+            category:"Appetizers",
+            items: [
+                {
+                    id:16,
+                    name:"Saganaki",
+                    price: 6
+                },
+                {
+                    id: 17,
+                    name: "Bruschetta",
+                    price: 8
+                },
+                {
+                    id: 18,
+                    name: "Calamari",
+                    price: 10
+                },
+                {
+                    id: 19,
+                    name: "Sausage with cheese",
+                    price: 9
+                },
+                {
+                    id: 20,
+                    name: "Stuffed Mushrooms",
+                    price: 7
+                },
+                {
+                    id: 21,
+                    name: "Garlic Bread",
+                    price: 5
+                },
+                {
+                    id: 22,
+                    name: "Spinach Dip",
+                    price: 8
+                },
+                {
+                    id: 23,
+                    name: "Mozzarella Sticks",
+                    price: 7
+                },
+                {
+                    id: 24,
+                    name: "Shrimp Cocktail",
+                    price: 12
+                },
+                {
+                    id: 25,
+                    name: "Fried Zucchini",
+                    price: 6
+                },
+                {
+                    id: 26,
+                    name: "Artichoke Dip",
+                    price: 8
+                }
+            ]
         },
         {
-            id:3,
-            name:"Greek Salad",
-            price: 9
-        }
+            category:"Deserts",
+            items: [
+                {
+                    id: 27,
+                    name: "Cheesecake",
+                    price: 9
+                },
+                {
+                    id: 28,
+                    name: "Chocolate Lava Cake",
+                    price: 8
+                },
+                {
+                    id: 29,
+                    name: "Tiramisu",
+                    price: 7
+                },
+                {
+                    id: 30,
+                    name: "Apple Pie",
+                    price: 6
+                }
+            ]
+        },
+        {
+            category:"Drinks",
+            items: [
+                {
+                    id: 31,
+                    name: "Coca-Cola",
+                    price: 2
+                },
+                {
+                    id: 32,
+                    name: "Lemonade",
+                    price: 3
+                },
+                {
+                    id: 33,
+                    name: "Iced Tea",
+                    price: 3
+                },
+                {
+                    id: 34,
+                    name: "Orange Juice",
+                    price: 4
+                },
+                {
+                    id: 35,
+                    name: "Margarita",
+                    price: 8
+                },
+                {
+                    id: 36,
+                    name: "Mojito",
+                    price: 7
+                },
+                {
+                    id: 37,
+                    name: "Cosmopolitan",
+                    price: 9
+                },
+                {
+                    id: 38,
+                    name: "Beer",
+                    price: 5
+                },
+                {
+                    id: 39,
+                    name: "Wine",
+                    price: 6
+                },
+                {
+                    id: 40,
+                    name: "Milkshake",
+                    price: 5
+                }
+                
+            ]
+        },
     ],
-    reservation_id_counter:50,
-    order_id_counter:0,
+    reservation_id_counter:9,
+    order_id_counter:4,
     numberOfDaysToShowToCustomers: 14,
     maxCapacity: 7,
     maxReservationDurationIndexNumber: 7,

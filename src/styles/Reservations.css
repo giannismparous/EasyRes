@@ -7,6 +7,13 @@
     margin: 20px;
 }
 
+.reservations-container button {
+    padding: 8px;
+    box-sizing: border-box;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
 
 .loading-spinner {
     position: fixed;
@@ -22,6 +29,7 @@
     display: flex;
     flex-wrap: wrap;
     padding-top:100px;
+    gap: 10px;
 }
 
 .reservation {
@@ -33,25 +41,220 @@
     background-color: white;
 }
 
+.reservation button{
+    background-color: #007bff;
+}
+
 .reservation h2 {
     font-size: 20px;
     margin-bottom: 10px;
 }
 
+.reservation {
+    border: none;
+    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.reservations-container {
+    margin: 0px;
+}
+
 .reservation-details-container {
     display: flex; /* Use flexbox */
-    flex-wrap: wrap; /* Allow items to wrap to the next line if they don't fit horizontally */
-    gap: 20px;
+    flex-direction: row;
+    gap: 10px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    flex-wrap: wrap; 
+}
+
+.reservation-details {
+    border: 0px solid #ccc;
+    padding: 10px 0;
+    background-color: #d0d0d0;  
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 15px;
+    
+}
+
+.state-img {
+    height: 120px;
+    width: auto;
+    margin: 0;
+}    
+
+.reservation-customer-info {
+    padding-left: 10px;
+}
+
+.reservation-customer-info p{
+    margin: 10px;
+    font-size: 20px;
+}
+
+.reservation-state-info {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: center;
     justify-content: center;
 }
 
-.reservation-details {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px; /* Add margin between reservation details */
-    background-color: #d0d0d0;
+.reservation-order {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-right: 10px;
+    z-index: 1;
+}
+
+.reservation-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.state-title {
+    margin: 0;
+}
+
+.reservation-info-button {
+    height: 22px;
+    width: auto;
+}
+
+.reservation-info-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.reservation-info-details-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+
+@media screen and (max-width: 830px) {
+
+    .reservation {
+        border: none;
+        width: 100%; /* Set width to 100% to make each reservation take up full width */
+        margin: 0;
+        padding: 0;
+    }
+
+    .reservations-container {
+        margin: 0px;
+    }
+
+    .reservation-details-container {
+        display: flex; /* Use flexbox */
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reservation-details {
+        border: 0px solid #ccc;
+        margin: 0;
+        background-color: #d0d0d0;  
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .state-img {
+        height: 70px;
+        width: auto;
+        margin: 0;
+    }    
+
+    .reservation-customer-info {
+        padding-left: 10px;
+    }
+
+    .reservation-customer-info p{
+        margin: 10px;
+        font-size: 16px;
+    }
+
+    .reservation-state-info {
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reservation-order {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding-right: 10px;
+        z-index: 1;
+    }
+
+    .reservation-info {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .state-title {
+        margin: 0;
+    }
+
+    .reservation-info-button {
+        height: 20px;
+        width: auto;
+    }
+
+    .reservation-info-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+    }
+
+    .reservation-info-details-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+    }
+   
 }
 
 .reservation-details ul li{
@@ -69,41 +272,31 @@
     width: 100%; /* Take up full width of the screen */
     position: fixed;
     z-index: 100;
+    margin-top: 20px;
 }
 
 .reservations-container h2{
     color: black;
 }
 
-/* .reservations-container h2:after {
-    background-color: #000;
-    border-radius: 2.5px;
-    bottom: -6px;
-    content: "";
-    display: block;
-    height: 5px;
-    left: 0;
-    position: absolute;
-    width: 100%;
-} */
+.reservations-container h2::after{
+    background-color: black;
+}
 
 .toggle-button {
+    width: auto;
     width: 30px; /* Set width and height to the same value for a round button */
     height: 30px; /* Same value as width to make it round */
     margin-left: 10px;
     border-radius: 50%;
-    background-color: #007bff;
-    color: white;
-    border: none;
 }
 
 .search-bar {
-    margin-top:22px;
     position: relative; /* Set position to relative */
     display: flex;
     align-items: center; /* Align items vertically */
     justify-content: center;
-    width: 300px;
+    width: calc(50% );
     margin-bottom: 20px;
 }
 
@@ -192,6 +385,7 @@
 
 .sort-label h2 {
     text-align: center;
+    margin: 10px 0;
 }
 
 .sort-label h2::after {
@@ -218,7 +412,6 @@
     border-radius: 50%;
     width: 35px;
     height: 35px;
-    border: none;
 }
 
 .cancel-button {
@@ -227,7 +420,6 @@
     border-radius: 50%;
     width: 35px;
     height: 35px;
-    border: none;
 }
 
 .completed {
@@ -275,11 +467,42 @@ position: fixed;
 width: auto;
 padding: 0;
 margin-top: 0px;
-margin-left: 85px;
 /* Add any additional styling as needed */
 }
 
+.edit-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    z-index: 2000;
+    position: fixed;
+    width: auto;
+    padding: 0;
+    margin-top: 18px;
+    margin-left: 90px;
+    /* Add any additional styling as needed */
+}
+
+.save-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    z-index: 2000;
+    position: fixed;
+    width: auto;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: 150px;
+    /* Add any additional styling as needed */
+    }
+
 .calendar-button:hover{
+    background-color: transparent;
+}
+
+.edit-button:hover{
+    background-color: transparent;
+}
+
+.save-button:hover{
     background-color: transparent;
 }
 
@@ -289,70 +512,16 @@ margin: 0;
 /* Add any additional styling as needed */
 }
 
-.dots-button {
-    background-color: transparent; /* Set the background color to transparent */
-    border: none;
-    width: auto;
-    /* z-index: 2000;
-    position: fixed;
-    width: auto;
-    margin-left: 70px; */
+.edit-button img {
+    width: 45px ;
+    margin: 0;
     /* Add any additional styling as needed */
 }
 
-.dots-button:hover{
-    background-color: transparent;
-}
-
-.dots-button img {
-width: 72px ;
-height: 72px;
-margin: 0;
-/* Add any additional styling as needed */
-}
-
-.reservations-button {
-    background-color: transparent; /* Set the background color to transparent */
-    border: none;
-    width: auto;
-    width: auto;
-    /* z-index: 2000;
-    position: fixed;
-    width: auto;
-    margin-left: 70px; */
+.save-button img {
+    width: 50px ;
+    margin: 0;
     /* Add any additional styling as needed */
-}
-    
-.reservations-button:hover{
-    background-color: transparent;
-}
-
-.reservations-button img {
-width: 70px ;
-height: 75px;
-margin: 0;
-/* Add any additional styling as needed */
-}
-
-.orders-button {
-background-color: transparent; /* Set the background color to transparent */
-border: none;
-width: auto;
-/* z-index: 2000;
-position: fixed;
-width: auto;
-margin-left: 130px; */
-/* Add any additional styling as needed */
-}
-
-.orders-button:hover{
-    background-color: transparent;
-}
-
-.orders-button img {
-width: 75px ;
-margin: 0;
-/* Add any additional styling as needed */
 }
 
 .no-reservations {
@@ -369,10 +538,7 @@ margin: 0;
     .search-bar {
         position: fixed; /* Set position to relative */
         display: flex;
-        justify-content: flex-end;
-        width: 300px;
         margin-bottom: 20px;
-        right:50px
     }
     
     .search-input {
@@ -381,6 +547,7 @@ margin: 0;
         border: 1px solid #ccc;
         border-radius: 20px; /* Adjust border-radius to make corners more rounded */
         font-size: 12px;
+        width: calc(70%);
     }
 }
 
@@ -392,6 +559,7 @@ margin: 0;
         z-index: 2000;
         position: fixed;
         left: 5px;
+        margin-top: 10px;
         /* Add any additional styling as needed */
     }
 
@@ -431,24 +599,9 @@ margin: 0;
         width: 60px;
     }
 
-    .search-bar-container {
-        display: flex;
-        justify-content: flex-end; /* Align to the right */
-        width: 70%; /* Take up full width of the screen */
-        position: fixed;
-        top: 0; /* Position fixed from the top */
-        right: 0; /* Align to the right */
-    }
     
     .search-bar {
-        margin-top: 33px;
-        position: relative; /* Set position to relative */
-        display: flex;
-        align-items: center; /* Align items vertically */
-        justify-content: center;
-        width: 250px;
         margin-bottom: 20px;
-        right: 40px;
     }
     
     .search-input {
@@ -467,13 +620,12 @@ margin: 0;
         border: none;
         z-index: 2000;
         position: fixed;
-        left: -68px;
-        top: 17px;
+        margin-top: 15px;
         /* Add any additional styling as needed */
     }
 
     .calendar-button img {
-        width: 45px;
+        width: 50px;
     }
 
     .dots-button {
@@ -508,26 +660,7 @@ margin: 0;
         width: 27px;
     }
 
-    .search-bar-container {
-        display: flex;
-        justify-content: flex-end; /* Align to the right */
-        width: 200px; /* Take up full width of the screen */
-        position: fixed;
-        top: 0; /* Position fixed from the top */
-        right: 0; /* Align to the right */
-    }
     
-    .search-bar {
-        margin-top: 33px;
-        position: relative; /* Set position to relative */
-        display: flex;
-        align-items: center; /* Align items vertically */
-        justify-content: center;
-        width: 300px;
-        margin-bottom: 20px;
-        bottom: 12px;
-        right: 30px;
-    }
     
     .search-input {
         flex: 1;
@@ -541,3 +674,428 @@ margin: 0;
 .table-header {
     text-align: center;
 }
+
+.state-popup-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2000;
+}
+
+.state-popup-window-items {
+    background-color: #007bff;
+    position: relative;
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(4, 1fr); /* 4 columns with equal width */
+    gap: 20px; /* Gap between grid items */
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    border-radius: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.state-popup-window-item {
+   display: flex;
+   flex-direction: column;
+   height: auto;
+   align-items: center;
+   justify-content: center;
+}
+
+.hidden {
+    opacity: 0.5; /* Make the element partially transparent */
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-items ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-items ul li {
+    margin: 0.5em 0;
+    padding-left: 1em;
+    text-indent: -0.7em;
+}
+
+.order-details-container {
+    display: flex; /* Use flexbox */
+    flex-direction: row;
+    gap: 10px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    flex-wrap: wrap; 
+}
+
+.order-details {
+    border: 0px solid #ccc;
+    padding: 10px 0;
+    background-color: #d0d0d0;  
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding: 15px 10px;
+}
+
+.order-details li{
+    color: black;
+}
+
+.order-details p{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 9, 128);
+}
+
+.order-details img{
+   margin: 0;
+}
+
+.order-table-number {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.order-reservation-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.table {
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0; /* Adjust margin to create space between reservations */
+    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    background-color: white;
+    
+}
+
+.table-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-details-container {
+    display: flex; /* Use flexbox */
+    flex-direction: row;
+    gap: 10px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    flex-wrap: wrap; 
+}
+
+.table-details {
+    border: 0px solid #ccc;
+    padding: 10px 0;
+    background-color: #d0d0d0;  
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding: 15px 10px;
+
+}
+
+.add-table-button {
+    width: 50px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 50%; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+
+.add-table-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+}
+
+.table-popup-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2000;
+}
+
+.table-popup-window-container {
+    position: fixed;
+    width: 600px;
+    background-color: white; /* Semi-transparent black background */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.table-header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.table-popup-window-container input[type="number"] {
+    width: 70px;
+}
+
+.popup-add-table-button {
+    width: auto; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 30px; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+
+.table-popup-window-container-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.available-img {
+    height: 40px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 0;
+}    
+
+.unavailable-img {
+    height: 40px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 0;
+}    
+
+.add-reservation-button {
+    width: 50px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 50%; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+
+.add-reservation-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+}
+
+.reservation-popup-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2000;
+}
+
+.reservation-popup-window-container {
+    position: fixed;
+    width: 600px;
+    background-color: white; /* Semi-transparent black background */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.reservation-popup-window-container input{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.reservation-popup-window-container input[type="number"] {
+    width: 70px;
+}
+
+.reservation-popup-window-container input[type="text"] {
+    width: 100px;
+}
+
+.reservation-popup-window-container input[type="phone"] {
+    width: 100px;
+}
+
+.reservation-popup-window-container input[type="email"] {
+    width: 100px;
+}
+
+.reservation-popup-window-container h2::after{
+    background-color: #000980;
+}
+
+.reservation-popup-window-container label{
+    margin: 1em 0;
+    color: #000980;
+}
+
+.table-popup-window-container h2::after{
+    background-color: #000980;
+}
+
+.table-popup-window-container label{
+    margin: 1em 0;
+    color: #000980;
+}
+
+.edit-open {
+    background-color: white;
+    border-radius: 100px;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.menu-container p{
+    font-size: 40px;
+    color: rgb(0, 9, 128);
+}
+
+.menu-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.add-menu-item-button {
+    width: 50px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 50%; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+
+.add-menu-item-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+}
+
+.menu-item-popup-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2000;
+}
+
+.menu-item-popup-window-container {
+    position: fixed;
+    width: 600px;
+    background-color: white; /* Semi-transparent black background */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    gap: 10px;
+}
+
+.menu-item-popup-window-container input[type="number"] {
+    width: 70px;
+}
+
+.menu-item-popup-window-container input[type="text"] {
+    width: 100px;
+}
+
+.popup-add-menu-item-button {
+    width: auto; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 30px; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+
+.menu-item-popup-window-container input{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.menu-header h2 {
+    font-size: 40px;
+}
+
+.menu-category-section{
+    text-align: center;
+}
+
+.menu-category-section h2 {
+    font-size: 35px;
+    margin: 0;
+}
+
+.settings-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-container input{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.save-settings-button {
+    width: auto; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border-radius: 30px; /* Makes the button round */
+    background-color: #007bff; /* Add your desired background color */
+    /* Add any other styles you need */
+}
+

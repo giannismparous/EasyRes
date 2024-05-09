@@ -116,8 +116,8 @@ const Reserve = () => {
       if (redTables.includes(reservation.table_id) || reservation.canceled===true || reservation.completed===true ){
         continue;
       }
-      if (selectedTimeIndex >= reservation.start_time_index - maxReservationDurationIndexNumber && selectedTimeIndex <= reservation.end_time_index + maxReservationDurationIndexNumber) {
-          redTables.push(reservation.table_id);
+      if (selectedTimeIndex >= reservation.start_time_index - maxReservationDurationIndexNumber && selectedTimeIndex <= reservation.start_time_index + maxReservationDurationIndexNumber) {
+        redTables.push(reservation.table_id);
       }
 
     }
@@ -131,7 +131,8 @@ const Reserve = () => {
               collectionKey: "sample-restaurant",
               date: selectedDate,
               startIndex: selectedTimeIndex,
-              endIndex: selectedTimeIndex+maxReservationDurationIndexNumber
+              endIndex: selectedTimeIndex+maxReservationDurationIndexNumber,
+              people: selectedCapacity
             };
             
     window.parent.postMessage(data, '*');
