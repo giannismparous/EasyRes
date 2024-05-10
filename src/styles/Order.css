@@ -1,0 +1,248 @@
+.order-page {
+    /* Add flexbox properties for horizontal centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Other existing styles */
+}
+
+.category-section {
+    text-align: center;
+    width: 100%;
+}
+
+.category-section h2 {
+    color: black;
+    margin: 0;
+    margin-top: 30px;
+    font-size: 50px;
+}
+
+.category-section ul {
+    padding-top: 10px;
+}
+
+.category-section li {
+    color: black;
+}
+
+.add-more-button {
+    background-color: green;
+    font-size: 40px;
+    border-radius: 500px;
+    width: 60px; /* Set width and height to the same value for circular shape */
+    height: 60px; /* Set width and height to the same value for circular shape */
+}
+
+.remove-more-button {
+    background-color: red;
+    font-size: 40px;
+    border-radius: 500px;
+    width: 60px; /* Set width and height to the same value for circular shape */
+    height: 60px; /* Set width and height to the same value for circular shape */
+}
+
+.add-button {
+    font-size: 40px;
+    border-radius: 500px;
+    width: 60px; /* Set width and height to the same value for circular shape */
+    height: 60px; /* Set width and height to the same value for circular shape */
+}
+
+.send-order-button {
+    font-size: 40px;
+    border-radius: 500px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    width: auto;
+}
+
+.order-menu-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three columns: auto, 1fr (1 fraction), auto */
+    align-items: center;
+    text-align: center;
+    font-size: 50px;
+}
+
+.order-menu-item p{
+    width: auto;
+}
+
+.notes-input {
+    text-align: center;
+    width: 30px;
+    font-size: 20px;
+}
+
+.order-menu-item p{
+    font-size: 40px;
+}
+
+.order-menu-item input {
+    width: calc(100% - 16px);
+    font-size: 20px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 8px;
+    transition: border-color .3s;
+}
+
+.add-button {
+    background-color: #007bff;
+    border: none;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.add-more-button, .remove-more-button {
+    border: none;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.send-order-button {
+    border: none;
+    box-sizing: border-box;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    padding: 20px;
+}
+
+@media screen and (max-width: 910px) {
+    .category-section h2 {
+        font-size: 35px;
+    }
+
+    .order-menu-item p{
+        font-size: 25px;
+    }
+
+    .add-more-button {
+        font-size: 25px;
+        width: 40px; /* Set width and height to the same value for circular shape */
+        height: 40px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .remove-more-button {
+        font-size: 25px;
+        width: 40px; /* Set width and height to the same value for circular shape */
+        height: 40px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .add-button {
+        font-size: 25px;
+        border-radius: 500px;
+        width: 40px; /* Set width and height to the same value for circular shape */
+        height: 40px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .send-order-button {
+        font-size: 25px;
+    }
+
+    .order-menu-item {
+        font-size: 30px;
+    }
+
+    .notes-input {
+        text-align: center;
+        width: 30px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .category-section h2 {
+        font-size: 25px;
+    }
+
+    .order-menu-item p{
+        font-size: 20px;
+    }
+
+    .add-more-button {
+        font-size: 20px;
+        width: 30px; /* Set width and height to the same value for circular shape */
+        height: 30px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .remove-more-button {
+        font-size: 20px;
+        width: 30px; /* Set width and height to the same value for circular shape */
+        height: 30px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .add-button {
+        font-size: 20px;
+        border-radius: 500px;
+        width: 30px; /* Set width and height to the same value for circular shape */
+        height: 30px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .send-order-button {
+        font-size: 20px;
+    }
+
+    .order-menu-item {
+        font-size: 25px;
+    }
+
+    .notes-input {
+        text-align: center;
+        width: 30px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .category-section h2 {
+        font-size: 20px;
+    }
+
+    .order-menu-item p{
+        font-size: 15px;
+    }
+
+    .add-more-button {
+        font-size: 15px;
+        width: 25px; /* Set width and height to the same value for circular shape */
+        height: 25px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .remove-more-button {
+        font-size: 15px;
+        width: 25px; /* Set width and height to the same value for circular shape */
+        height: 25px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .add-button {
+        font-size: 15px;
+        border-radius: 500px;
+        width: 25px; /* Set width and height to the same value for circular shape */
+        height: 25px; /* Set width and height to the same value for circular shape */
+    }
+    
+    .send-order-button {
+        font-size: 15px;
+    }
+
+    .order-menu-item {
+        font-size: 20px;
+    }
+
+    .notes-input {
+        text-align: center;
+        width: 30px;
+        font-size: 10px;
+    }
+}

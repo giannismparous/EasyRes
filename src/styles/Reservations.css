@@ -1099,3 +1099,7 @@ margin: 0;
     /* Add any other styles you need */
 }
 
+.settings-fields {
+    display: flex;
+    flex-direction: column;
+}
