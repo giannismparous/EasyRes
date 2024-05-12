@@ -20,7 +20,7 @@ const dateDoc = {
             table_id: 8,
             people: 4,
             reservation_id: 2,
-            state: 1
+            state: 3
         },
         {
             name: "ASPASIA",
@@ -71,7 +71,7 @@ const dateDoc = {
             table_id: 10,
             people: 6,
             reservation_id: 7,
-            state: 2
+            state: 3
         },
         {
             name: "AVEL",
@@ -101,19 +101,27 @@ const dateDoc = {
             order_items:[
                 {
                     menu_item_id: 2,
-                    quantity: 3
+                    quantity: 3,
+                    order_item_id: 1,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 3,
-                    quantity: 1
+                    quantity: 1,
+                    order_item_id: 2,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 6,
-                    quantity: 2
+                    quantity: 2,
+                    order_item_id: 3,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 8,
-                    quantity: 3
+                    quantity: 3,
+                    order_item_id: 4,
+                    ingredients:[]
                 }
             ]
         },
@@ -123,23 +131,33 @@ const dateDoc = {
             order_items:[
                 {
                     menu_item_id: 1,
-                    quantity: 5
+                    quantity: 5,
+                    order_item_id: 1,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 3,
-                    quantity: 2
+                    quantity: 2,
+                    order_item_id: 2,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 10,
-                    quantity: 4
+                    quantity: 4,
+                    order_item_id: 3,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 20,
-                    quantity: 1
+                    quantity: 1,
+                    order_item_id: 4,
+                    ingredients:[]
                 },
                 {
                     menu_item_id:22,
-                    quantity: 1
+                    quantity: 1,
+                    order_item_id: 5,
+                    ingredients:[]
                 }
             ]
         },
@@ -149,11 +167,15 @@ const dateDoc = {
             order_items:[
                 {
                     menu_item_id: 4,
-                    quantity: 2
+                    quantity: 2,
+                    order_item_id: 1,
+                    ingredients:[]
                 },
                 {
                     menu_item_id: 3,
-                    quantity: 9
+                    quantity: 9,
+                    order_item_id: 2,
+                    ingredients:[]
                 }
             ]
         }

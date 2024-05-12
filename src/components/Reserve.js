@@ -3,8 +3,13 @@ import {fetchDateInfoForCustomer, fetchDatesAvailability, fetchInfoForCustomer, 
 import '../styles/Reserve.css'; // Import CSS file for styling
 import { ClockLoader } from 'react-spinners';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Reserve = () => {
+
+  const navigate = useNavigate();
+
+  const { collectionKey, mode } = useParams();
  
   useEffect(() => {
 
@@ -35,16 +40,18 @@ const Reserve = () => {
 
           const reservationsTimesMap = {};
 
-            response[0].forEach(item => {
-                reservationsTimesMap[item.id] = item.time;
-            })
+          response[0].forEach(item => {
+              reservationsTimesMap[item.id] = item.time;
+          })
 
           setTimesMap(reservationsTimesMap);
           setUnavailableDays(response[1]);
           setTablesCapacityMap(response[2]);
+          setTablesSmokeFriendlyMap(tablesSmokeFriendlyMap);
           setDaysToShow(getNextDays(response[3]).filter(date => !response[1].includes(date)));
           setMaxCapacity(response[4]);
           setMaxReservationDurationIndexNumber(parseInt(response[5]));
+          setTablesSmokeFriendlyMap(response[6]);
           setLoading(false);
 
         }
@@ -57,16 +64,15 @@ const Reserve = () => {
       };
 
 
-    const collectionKey = 'sample-restaurant';
     getInfoFromServer(collectionKey);
     
-  }, []);
+  }, [collectionKey]);
 
   const handleDateButtonClick = (date) => {
 
     setChoosingTime(true);
     setSelectedDate(date);
-    getDateInfoFromServer('sample-restaurant', date);
+    getDateInfoFromServer(collectionKey, date);
     
   };
 
@@ -84,6 +90,10 @@ const Reserve = () => {
 
   };
 
+  const handleSmokingChange = (e) => {
+    setSmokes(e.target.value === 'option1'); // If 'option1' is selected, set smokes to true, otherwise false
+  };
+
   const handleOkButtonClick = () => {
 
     const redTables = [...unavailableTables];
@@ -96,7 +106,19 @@ const Reserve = () => {
             redTables.push(parseInt(tableId));
           }
       }
-  }
+    }
+
+    if (smokes===true){
+      for (const tableId in tablesSmokeFriendlyMap) {
+        if (redTables.includes(tableId))continue;
+        if (tablesSmokeFriendlyMap.hasOwnProperty(tableId)) {
+            const smokeFriendly = tablesSmokeFriendlyMap[tableId];
+            if (smokeFriendly === false) {
+              redTables.push(parseInt(tableId));
+            }
+        }
+      }
+    }
 
     for (const table of unavailableTablesTimesIndexes) {
       if (redTables.includes(table.table_id))continue;
@@ -125,17 +147,51 @@ const Reserve = () => {
     console.log("Red tables:")
     console.log(redTables);
 
-    const data = {
-              eventName: 'ReservationTimeSelected',
-              redTables: redTables,
-              collectionKey: "sample-restaurant",
-              date: selectedDate,
-              startIndex: selectedTimeIndex,
-              endIndex: selectedTimeIndex+maxReservationDurationIndexNumber,
-              people: selectedCapacity
-            };
-            
-    window.parent.postMessage(data, '*');
+    if (parseInt(mode) === 1){
+
+      const data = {
+        eventName: 'ReservationTimeSelected',
+        redTables: redTables,
+        collectionKey: collectionKey,
+        date: selectedDate,
+        startIndex: selectedTimeIndex,
+        endIndex: selectedTimeIndex+maxReservationDurationIndexNumber,
+        people: selectedCapacity
+      };
+      
+      window.parent.postMessage(data, '*');
+
+    }
+    else if (parseInt(mode) === 2){
+
+      const availableTables = [];
+      const size = Object.keys(tablesCapacityMap).length;
+
+      // Iterate through tablesCapacityMap to find available tables
+
+      
+      for (let i = 1; i <= size; i++) {
+        // If the table id is not in the redTables array (i.e., it's available)
+        if (!redTables.includes(i)) {
+          availableTables.push(i); // Add the table id to availableTables array
+        }
+      }
+
+      // If there are available tables
+      if (availableTables.length > 0) {
+        // Randomly select a table id from availableTables array
+        const randomTableId = availableTables[Math.floor(Math.random() * availableTables.length)];
+        console.log("Randomly selected available table id:", randomTableId);
+        navigate(`/reserve/${collectionKey}/${selectedDate}/${selectedTimeIndex}/${selectedTimeIndex + maxReservationDurationIndexNumber}/${randomTableId}`);
+
+      } else {
+        console.log("No available tables.");
+        // Handle the case when no tables are available
+      }
+
+    }
+
+    
 
   };
 
@@ -195,6 +251,7 @@ const Reserve = () => {
   const [timesMap, setTimesMap] = useState([]);
   const [unavailableDays, setUnavailableDays] = useState([]);
   const [tablesCapacityMap, setTablesCapacityMap] = useState([]);
+  const [tablesSmokeFriendlyMap, setTablesSmokeFriendlyMap] = useState([]);
   const [loading, setLoading] = useState(true);
   const [daysToShow,setDaysToShow] = useState(0);
   const [choosingTime, setChoosingTime] = useState(false);
@@ -204,6 +261,7 @@ const Reserve = () => {
   const [selectedDate,setSelectedDate] = useState("");
   const [selectedTimeIndex,setSelectedTimeIndex] = useState(0);
   const [selectedCapacity,setSelectedCapacity] = useState(1);
+  const [smokes,setSmokes] = useState(false);
   const [maxReservationDurationIndexNumber,setMaxReservationDurationIndexNumber] = useState(7);
   const [unavailableTables,setUnavailableTables] = useState([]);
   const [unavailableTablesTimesIndexes,setUnavailableTablesTimesIndexes] = useState([]);
@@ -240,21 +298,30 @@ const Reserve = () => {
                       </button>
                     ))}
                     </div>}
-                    {!choosingTime && choosingCapacity && <div className='reserve-container'>
-                      <h2>Choose capacity:</h2>
-                      {maxCapacity === 0 ? (
-                        <h2>No available options.</h2>
-                      ) : (
-                        <select className='select-capacity-dropdown' onChange={(e) => handleCapacityButtonClick(e.target.value)}>
-                          {[...Array(maxCapacity).keys()].map((num) => (
-                            <option key={num + 1} value={num + 1}>
-                              {num + 1}
-                            </option>
-                          ))}
-                        </select>
-                      )}
-                      <button className='ok-button' onClick={() => handleOkButtonClick()}>OK</button>
-                    </div>}
+                    {!choosingTime && choosingCapacity && (
+                      <div className='reserve-container'>
+                        <h2>Choose capacity:</h2>
+                        {maxCapacity === 0 ? (
+                          <h2>No available options.</h2>
+                        ) : (
+                          <select className='select-capacity-dropdown' onChange={(e) => handleCapacityButtonClick(e.target.value)}>
+                            {[...Array(maxCapacity).keys()].map((num) => (
+                              <option key={num + 1} value={num + 1}>
+                                {num + 1}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                        <h2>Do you smoke?</h2>
+                        <form>
+                          <input type="radio" id="option1" name="smoking" value="option1" onChange={handleSmokingChange} checked={smokes}/>
+                          <label htmlFor="option1">Yes</label><br />
+                          <input type="radio" id="option2" name="smoking" value="option2" onChange={handleSmokingChange} checked={!smokes}/>
+                          <label htmlFor="option2">No</label><br />
+                        </form>
+                        <button className='ok-button' onClick={() => handleOkButtonClick(mode)}>OK</button>
+                      </div>
+                    )}
                   </>
               )}
     </div>
@@ -262,130 +329,3 @@ const Reserve = () => {
 };
 
 export default Reserve;
-
-// const [dates,setDates] = useState([]);
-// const [times, setTimes] = useState([]);
-// const [clickedIndex, setClickedIndex] = useState(null);
-// const [maxIndex, setMaxIndex] = useState(null);
-// const [choosingReservationDate, setChoosingReservationDate] = useState(false);
-// const [showConfirmation, setShowConfirmation] = useState(false);
-// const [selectedDate, setSelectedDate] = useState(false);
-// const [dateSelected, setDateSelected] = useState("");
-// const [datesFetched, setDatesFetched] = useState(false);
-// const [timesFetched, setTimesFetched] = useState(false); 
-
-// const handleButtonClickTime = (index) => {
-//   if (choosingReservationDate) {
-//     if (index < clickedIndex || index > maxIndex) {
-//       setChoosingReservationDate(!choosingReservationDate);
-//     } else {
-//       setMaxIndex(index);
-//       setShowConfirmation(true); // Show confirmation popup
-//     }
-//   } else {
-//     if (times[index].unavailable === true) {
-//       alert("Can't book this date");
-//       return;
-//     }
-//     let num = 0;
-//     for (let i = index + 1; i < index + maxIndexForward; i++) {
-//       const time = times[i];
-//       if (time.unavailable === undefined) {
-//         num = num + 1;
-//       } else {
-//         break; // Exit the loop if table.name is not null
-//       }
-//     }
-//     setClickedIndex(index);
-//     setMaxIndex(index + num);
-//     setChoosingReservationDate(!choosingReservationDate);
-//   }
-// };
-
-// const handleConfirmation = (confirmed) => {
-//   if (confirmed) {
-//     handleTablesFetch();
-//   }
-//   else {
-//     setChoosingReservationDate(false);
-//   }
-//   setShowConfirmation(false);
-// };
-
-// const handleTablesFetch = async () => {
-//   fetchTablesAvailability(clickedIndex, maxIndex, getCurrentDate())
-//     .then(unavailableTables => {
-//       const data = {
-//         eventName: 'ReservationTimeSelected',
-//         redTables: unavailableTables,
-//         startIndex: clickedIndex,
-//         endIndex: maxIndex
-//       };
-//       console.log(unavailableTables);
-//       window.parent.postMessage(data, '*');
-//     })
-//     .catch(error => {
-//       console.error('Error fetching tables availability:', error);
-//       // Handle error if needed
-//     });
-// };
-
-{/* {(!timesFetched && selectedDate) || (!datesFetched) && (
-        <div className="loading-overlay">
-          <div className="loader-container">
-            <HashLoader type="Grid" color="#8a5a00" size={80}/>
-          </div>
-        </div>
-      )}
-      <div className="calendar-buttons">
-        {!selectedDate && dates.map((date, index) => (
-          <button
-            key={index}
-            className={`
-              ${date.unavailable ? 'calendar-button-green' : 'calendar-button-green'}
-              ${choosingReservationDate && clickedIndex !== null && (index < clickedIndex || index > maxIndex) && 'grayed-out'}
-            `}
-            onClick={() => handleButtonClickDate(index)}
-          >
-            {date.date}
-          </button>
-        ))}
-        {selectedDate && times.map((time, index) => (
-          <button
-            key={time.id}
-            className={`
-              ${time.unavailable === undefined ? 'calendar-button-green' : 'calendar-button-red'}
-              ${choosingReservationDate && clickedIndex !== null && (index < clickedIndex || index > maxIndex) && 'grayed-out'}
-            `}
-            onClick={() => handleButtonClickTime(index)}
-          >
-            {time.time}
-          </button>
-        ))}
-      </div>
-      {showConfirmation && (
-        <div className="confirmation-popup">
-          <p>Are you sure you want to look for tables for these dates?</p>
-          <div>
-            <button onClick={() => handleConfirmation(true)}>Yes</button>
-            <button onClick={() => handleConfirmation(false)}>No</button>
-          </div>
-        </div>
-      )} */}
-
-  // useEffect(() => {
-  //   if (dateSelected) {
-  //     const handleFetchTimes = async () => {
-  //       const fetchedTimes = await fetchSchedulesTimes(dateSelected);
-  //       setTimes(fetchedTimes);
-  //       setTimesFetched(true);
-  //     };
-  
-  //     handleFetchTimes();
-  //   }
-  // }, [dateSelected]);
-
-  // const handleButtonClickDate = (index) => {
-  //   setDateSelected(dates[index].date);
-  //   setSelectedDate(true);
-  // };

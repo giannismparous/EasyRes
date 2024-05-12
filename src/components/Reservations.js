@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Reservations.css';
-import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, updateReservation, updateRestaurantInfo, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
+import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, updateMenu, updateReservation, updateRestaurantInfo, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
 import { ClockLoader } from 'react-spinners';
 import CalendarYearly from './CalendarYearly';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu'
 
 const sortByImg = '../icons/sort_by.png';
@@ -12,6 +12,8 @@ const calendarClosedImg = '../icons/calendar-closed-blue.png';
 const editOpenImg = '../icons/edit-open.png';
 const editClosedImg = '../icons/edit.png';
 const saveImg = '../icons/save.png';
+const saveBlueImg = '../icons/save-blue.png';
+const refreshImg = '../icons/refresh.png';
 
 const states = [
     { id: 1, imgSrc: "../icons/late_state.png", title: "Late" },
@@ -25,96 +27,23 @@ const states = [
 
 const Reservations = () => {
 
-    const getCurrentDate = () => {
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth() + 1; // Month is zero-based
-        const day = currentDate.getDate();
-        return `${day}-${month}-${year}`;
+    function getCurrentTime(timezone) {
+        // Get current time in "hh:mm" format in Greece timezone
+        const currentTime = new Date().toLocaleTimeString('en-US', { timeZone: timezone, hour12: false, hour: '2-digit', minute: '2-digit' });
+        return currentTime;
+    }
+    
+    const getCurrentDate = (timezone) => {
+        const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone }); // Getting the current date and time in the specified timezone
+        const dateObj = new Date(currentDate); // Converting the string to a Date object
+        const year = dateObj.getFullYear(); // Getting the current year
+        const month = dateObj.getMonth() + 1; // Getting the current month (Note: Months are zero-based, so we add 1 to get the correct month)
+        const day = dateObj.getDate(); // Getting the current day of the month
+        return `${day}-${month}-${year}`; // Returning the formatted date in the format: day-month-year
     }
 
-    useEffect(() => {
+    const {collectionKey} = useParams();
 
-        const getInfoFromServer = async (collectionKey) => {
-            try {
-
-                const response = await fetchInfo(collectionKey);
-
-                console.log("Response:");
-                console.log(response);
-
-                setInfo(response);
-                setTables(response.tables);
-
-                const reservationsTimesMap = {};
-                response.reservation_times.forEach(item => {
-                    reservationsTimesMap[item.id] = item.time;
-                })
-
-                setTimesMap(reservationsTimesMap);
-
-                const menuItemsMap = {};
-                // Keep track of unique category names
-                const uniqueCategoriesSet = new Set();
-
-                response.menu.forEach(category => {
-                    category.items.forEach(item => {
-                        menuItemsMap[item.id] = { name: item.name, price: item.price, category: category.category };
-                        uniqueCategoriesSet.add(category.category); // Add category name to set
-                    });
-                });
-
-                setMenuMap(menuItemsMap);
-                setUniqueCategories(Array.from(uniqueCategoriesSet)); 
-
-                setUnavailableDays(response.unavailable_days);
-                setMergedUnavailableDays(response.unavailable_days);
-
-                setRestaurantName(response.name);
-                setReservationDuration(response.maxReservationDurationIndexNumber);
-                setNumberOfDaysAvailableForBooking(response.numberOfDaysToShowToCustomers);
-
-            } catch (error) {
-                console.error("Error checking document: ", error);
-            }
-        };
-
-        const getDateInfoFromServer = async (collectionKey,date) => {
-
-            try {
-                
-                const response = await fetchDateInfo(collectionKey,date);
-
-                console.log("Response:");
-                console.log(response);
-
-                setIdsReservations(response[3]);
-                setFilteredIdsReservations(response[3]);
-                setTimesReservations(response[4]);
-                setFilteredTimesReservations(response[4]);
-                setNamesReservations(response[5]);
-                setFilteredNamesReservations(response[5]);
-                setTablesReservations(response[6]);
-                setFilteredTablesReservations(response[6]);
-                setIdsOrders(response[7]);
-                setFilteredIdsOrders(response[7]);
-                setReservationsOrders(response[8]);
-                setFilteredReservationsOrders(response[8]);
-                setLoading(false);
-
-            } catch (error) {
-                console.error("Error checking document: ", error);
-            }
-
-        };
-
-        const collectionKey = 'sample-restaurant';
-        getInfoFromServer(collectionKey);
-        getDateInfoFromServer(collectionKey,getCurrentDate());
-
-    }, []); // Empty dependency array ensures that the effect runs only once when the component is mounted
-
-    const [collectionKey, setCollectionKey] = useState("sample-restaurant");
     const [info, setInfo] = useState();
     const [maxReservationDurationIndexNumber, setMaxReservationDurationIndexNumber] = useState(0);
     const [tables,setTables] = useState([]);
@@ -146,11 +75,13 @@ const Reservations = () => {
     const [sortByMenuOpen, setSortByMenuOpen] = useState(false);
     const [selectedSortOption, setSelectedSortOption] = useState(2);
     const [showCalendar, setShowCalendar] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(getCurrentDate()); // State to store selected date
+    const [selectedDate, setSelectedDate] = useState(); // State to store selected date
     const [selectedDateEmpty, setSelectedDateEmpty] = useState(false); // State to store selected date
     const [mode, setMode] = useState(1);
     const [currentReservation, setCurrentReservation] = useState();
     const [uniqueCategories, setUniqueCategories] = useState([]);
+    const [timezone, setTimezone] = useState();
+    const [expandedMenuItems, setExpandedMenuItems] = useState([]);
 
     const [showStatePopup, setShowStatePopup] = useState(false);
     const [showAddTablePopup, setShowAddTablePopup] = useState(false);
@@ -177,7 +108,98 @@ const Reservations = () => {
     const [reservationDuration, setReservationDuration] = useState('');
     const [numberOfDaysAvailableForBooking, setNumberOfDaysAvailableForBooking] = useState('');
 
+    const [newIngredientName, setNewIngredientName] = useState('');
+    const [newIngredientPrice, setNewIngredientPrice] = useState();
+
     const [showEditOpen, setShowEditOpen] = useState(false);
+
+    const getInfoFromServer = async (collectionKey) => {
+        try {
+
+            const response = await fetchInfo(collectionKey);
+
+            console.log("Response:");
+            console.log(response);
+
+            setInfo(response);
+            setTables(response.tables);
+
+            const reservationsTimesMap = {};
+            response.reservation_times.forEach(item => {
+                reservationsTimesMap[item.id] = item.time;
+            })
+
+            setTimesMap(reservationsTimesMap);
+
+            const menuItemsMap = {};
+            // Keep track of unique category names
+            const uniqueCategoriesSet = new Set();
+
+            response.menu.forEach(category => {
+                category.items.forEach(item => {
+                    menuItemsMap[item.id] = { name: item.name, price: item.price, category: category.category, ingredients: item.ingredients };
+                    uniqueCategoriesSet.add(category.category); // Add category name to set
+                });
+            });
+
+            setMenuMap(menuItemsMap);
+            setUniqueCategories(Array.from(uniqueCategoriesSet)); 
+
+            setUnavailableDays(response.unavailable_days);
+            setMergedUnavailableDays(response.unavailable_days);
+
+            setRestaurantName(response.name);
+            setReservationDuration(response.maxReservationDurationIndexNumber);
+            setNumberOfDaysAvailableForBooking(response.numberOfDaysToShowToCustomers);
+            setTimezone(response.timeZone);
+            setSelectedDate(getCurrentDate(response.timezone));
+
+        } catch (error) {
+            console.error("Error checking document: ", error);
+        }
+    };
+
+    useEffect(() => {
+        
+        getInfoFromServer(collectionKey);
+
+    }, []); // Empty dependency array ensures that the effect runs only once when the component is mounted
+
+    useEffect(() => {
+
+        const getDateInfoFromServer = async (collectionKey,date) => {
+
+            try {
+
+                const response = await fetchDateInfo(collectionKey,date);
+
+                console.log("Response:");
+                console.log(response);
+
+                setIdsReservations(response[3]);
+                setFilteredIdsReservations(response[3]);
+                setTimesReservations(response[4]);
+                setFilteredTimesReservations(response[4]);
+                setNamesReservations(response[5]);
+                setFilteredNamesReservations(response[5]);
+                setTablesReservations(response[6]);
+                setFilteredTablesReservations(response[6]);
+                setIdsOrders(response[7]);
+                setFilteredIdsOrders(response[7]);
+                setReservationsOrders(response[8]);
+                setFilteredReservationsOrders(response[8]);
+                setLoading(false);
+
+            } catch (error) {
+                console.error("Error checking document: ", error);
+            }
+
+        };
+
+        if (timezone)getDateInfoFromServer(collectionKey,getCurrentDate(timezone));
+
+    }, [timezone]); // Empty dependency array ensures that the effect runs only once when the component is mounted
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -352,6 +374,13 @@ const Reservations = () => {
 
     };
 
+    const updateMenuToServer = async () => {
+
+        const response = await updateMenu(collectionKey, menuMap);
+        console.log(response);
+
+    };
+
     const handleDateSelect = (date) => {
         console.log("Selected date:" + date);
         setSelectedDate(date);
@@ -400,8 +429,7 @@ const Reservations = () => {
             }
         };
     
-        const collectionKey = 'sample-restaurant';
-        getNewDateInfoFromServer(collectionKey,selectedDate);
+        if (selectedDate)getNewDateInfoFromServer(collectionKey,selectedDate);
         
     }, [selectedDate]);
 
@@ -429,6 +457,14 @@ const Reservations = () => {
         setExpandedReservationsOrders(Array(reservationsOrders.length).fill(true));
     }, [reservationsOrders]);
 
+    useEffect(() => {
+
+        if (Object.keys(expandedMenuItems).length===0){
+            const menuMapLength = Object.keys(menuMap).length;
+            setExpandedMenuItems(Array(menuMapLength).fill(false));
+        }
+    }, [menuMap]);
+
     const handleCompleteReservation = async (reservationId) => {
         await completeReservationByTableNumber(collectionKey, reservationId, selectedDate);
         window.location.reload();
@@ -440,7 +476,6 @@ const Reservations = () => {
     };
 
     const toggleReservationDetailsByTable = (tableId) => {
-        console.log(expandedTablesReservations);
         setExpandedTablesReservations(prevexpandedTablesReservations => {
             return prevexpandedTablesReservations.map((value, index) => {
                 return index === tableId ? !value : value;
@@ -452,6 +487,14 @@ const Reservations = () => {
         setExpandedTimesReservations(prevExpandedTimesReservations => {
             return prevExpandedTimesReservations.map((value, index) => {
                 return index === timeId ? !value : value;
+            });
+        });
+    };
+
+    const toggleMenuItem = (menuItemIndex) => {
+        setExpandedMenuItems(prevExpandedMenuItems => {
+            return prevExpandedMenuItems.map((value, index) => {
+                return index === menuItemIndex ? !value : value;
             });
         });
     };
@@ -546,54 +589,54 @@ const Reservations = () => {
 
     useEffect(() => {
         const findNearestTimeIndex = () => {
-          const currentTime = new Date();
-          const currentHour = currentTime.getHours();
-          const currentMinute = currentTime.getMinutes();
-          
-          const timeToMinutes = (time) => {
-            const [hour, minute] = time.split(':').map(part => parseInt(part));
-            return hour * 60 + minute;
-          };
-    
-          const futureTimes = timesReservations.filter(time => {
-            const [hour, minute] = timesMap[time.start_time_index].split(':');
-            const timeInMinutes = parseInt(hour) * 60 + parseInt(minute);
-            const currentTimeInMinutes = currentHour * 60 + currentMinute;
-            return timeInMinutes > currentTimeInMinutes;
-          });
+            const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone }); // Getting the current date and time in the specified timezone
+            const currentTime = new Date(currentDate); // Converting the string to a Date object
+            const currentHour = currentTime.getHours();
+            const currentMinute = currentTime.getMinutes();
+            
+            const timeToMinutes = (time) => {
+                const [hour, minute] = time.split(':').map(part => parseInt(part));
+                return hour * 60 + minute;
+            };
         
-          if (futureTimes.length === 0) {
-            // If there are no future times, return the last time
-
-            if (timesReservations.length===0)return 0;
-            return timesReservations[timesReservations.length - 1].start_time_index;
-          }
-
-          let nearestTimeIndex = futureTimes[0].start_time_index;
-            let minDiff = Math.abs(timeToMinutes(timesMap[futureTimes[0].start_time_index]) - (currentHour * 60 + currentMinute));
-            futureTimes.forEach(timeReservation => {
-                const diff = Math.abs(timeToMinutes(timesMap[timeReservation.start_time_index]) - (currentHour * 60 + currentMinute));
-                if (diff < minDiff) {
-                minDiff = diff;
-                nearestTimeIndex = timeReservation.start_time_index;
-                }
+            const futureTimes = timesReservations.filter(time => {
+                const [hour, minute] = timesMap[time.start_time_index].split(':');
+                const timeInMinutes = parseInt(hour) * 60 + parseInt(minute);
+                const currentTimeInMinutes = currentHour * 60 + currentMinute;
+                return timeInMinutes > currentTimeInMinutes;
             });
-
-            console.log(nearestTimeIndex);
-            return nearestTimeIndex;
-        };
         
-        if(selectedSortOption===2 && timesReservations.length>0){
+            if (futureTimes.length === 0) {
+                // If there are no future times, return the last time
 
-            const nearestTimeIndex = findNearestTimeIndex();
-            const element = document.querySelector(`[data-time-index='${nearestTimeIndex}']`);
-
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+                if (timesReservations.length===0)return 0;
+                return timesReservations[timesReservations.length - 1].start_time_index;
             }
-        }
+
+            let nearestTimeIndex = futureTimes[0].start_time_index;
+                let minDiff = Math.abs(timeToMinutes(timesMap[futureTimes[0].start_time_index]) - (currentHour * 60 + currentMinute));
+                futureTimes.forEach(timeReservation => {
+                    const diff = Math.abs(timeToMinutes(timesMap[timeReservation.start_time_index]) - (currentHour * 60 + currentMinute));
+                    if (diff < minDiff) {
+                    minDiff = diff;
+                    nearestTimeIndex = timeReservation.start_time_index;
+                    }
+                });
+
+                return nearestTimeIndex;
+            };
+            
+            if(timezone && selectedSortOption===2 && timesReservations.length>0){
+
+                const nearestTimeIndex = findNearestTimeIndex();
+                const element = document.querySelector(`[data-time-index='${nearestTimeIndex}']`);
+
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         
-      }, [timesReservations,selectedSortOption, timesMap]);
+      }, [timesReservations,selectedSortOption, timesMap, timezone]);
 
     const toggleCalendar = () => {
         setShowCalendar(!showCalendar);
@@ -608,10 +651,12 @@ const Reservations = () => {
         else if (mode === 5) setSelectedSortOption(9);
       };
 
-    const calculateTotal = (orderItems) => {
+      const calculateTotal = (orderItems) => {
         let total = 0;
         orderItems.forEach(item => {
-            total += item.quantity * menuMap[item.menu_item_id].price;
+            const menuItem = menuMap[item.menu_item_id];
+            const ingredientsPrice = item.ingredients.reduce((acc, ing) => acc + ing.price, 0);
+            total += (item.quantity * menuItem.price) + ingredientsPrice;
         });
         return total;
     };
@@ -648,10 +693,63 @@ const Reservations = () => {
         setMergedUnavailableDays(updatedUnavailableDays);
     };
 
+    const updateIngredientPrice = (itemId, ingredientIndex, newPrice) => {
+        if (newPrice >= 0) {
+            const tempMenuMap = { ...menuMap };
+            tempMenuMap[itemId].ingredients[ingredientIndex].price = newPrice;
+            setMenuMap(tempMenuMap);
+        }
+        
+    };
+
+    const handleNewIngredientNameChange = (e) => {
+        setNewIngredientName(e.target.value);
+    };
+    
+    // Function to handle changes in the new ingredient's price
+    const handleNewIngredientPriceChange = (e) => {
+        setNewIngredientPrice(parseFloat(e.target.value));
+    };
+
+    const addIngredientToItem = (itemIndex) => {
+        // Create a new ingredient object
+        const newIngredient = {
+            name: newIngredientName,
+            price: newIngredientPrice
+        };
+    
+        // Find the item in the menuMap
+        const updatedMenuMap = {...menuMap};
+        const selectedItem = updatedMenuMap[itemIndex];
+    
+        // Append the new ingredient to the item's ingredients array
+        selectedItem.ingredients.push(newIngredient);
+    
+        // Update the state with the modified menuMap
+        setMenuMap(updatedMenuMap);
+    
+        // Clear the input fields after adding the ingredient
+        setNewIngredientName('');
+        setNewIngredientPrice(0);
+    };
+
+    const refreshData = () => {
+        // Call the function that fetches data from the server
+        getInfoFromServer(collectionKey);
+    };
+
     return (
         <div className='reservations-page'>
             <DropdownMenu changeMode={changeMode} currentMode={mode} />
             <div className="reservations-container">
+                <button className={`refresh-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={refreshData}>
+                    <img src={refreshImg} alt="Refresh Icon" width="25px" color='black'/>
+                </button>
+                {mode===4 && !showCalendar && 
+                <button className={`save-blue-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={() => updateMenuToServer()}>
+                    <img src={saveBlueImg} className={showEditOpen ? 'save-open-blue' : ''} alt="Save Icon" width="25px" color='black'/>
+                </button>
+                }
                 <button className={`calendar-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={toggleCalendar}>
                     {!showCalendar && <img src={calendarClosedImg} alt="Calendar Hidden Icon" width="25px" color='black'/>}
                     {showCalendar && <img src={calendarOpenImg} alt="Calendar Shown Icon" width="25px"/>}
@@ -883,14 +981,21 @@ const Reservations = () => {
                                                         <div className='reservation-state-info' onClick={() => {
                                                             reservation.table_id = table.id;
                                                             toggleStatePopup(reservation);}}>
-                                                            {states.map(state => (
-                                                                reservation.state === state.id && (
-                                                                    <div key={state.id} className='popup-window-item'>
-                                                                    <img className='state-img' src={state.imgSrc} alt={state.title} />
-                                                                    <p className='state-title'>{state.title}</p>
-                                                                    </div>
-                                                                )
-                                                            ))}
+                                                            {states.map(state => {
+                                                                // Check if reservation state is 3 and the start time is equal or greater than current time
+                                                                if (reservation.state === 3 && timesMap[time.start_time_index] >= getCurrentTime(timezone)) {
+                                                                    reservation.state = 1; // Update the state to 1
+                                                                }
+
+                                                                return (
+                                                                    reservation.state === state.id && (
+                                                                        <div key={state.id} className='popup-window-item'>
+                                                                            <img className='state-img' src={state.imgSrc} alt={state.title} />
+                                                                            <p className='state-title'>{state.title}</p>
+                                                                        </div>
+                                                                    )
+                                                                );
+                                                            })}
                                                         </div>
                                                         <div className='reservation-customer-info'>
                                                             <p><span>Name:</span> {reservation.name}</p>
@@ -943,14 +1048,21 @@ const Reservations = () => {
                                                         <div className='reservation-state-info' onClick={() => {
                                                             reservation.start_time_index = time.start_time_index;
                                                             toggleStatePopup(reservation);}}>
-                                                            {states.map(state => (
-                                                                reservation.state === state.id && (
-                                                                    <div key={state.id} className='popup-window-item'>
-                                                                    <img className='state-img' src={state.imgSrc} alt={state.title} />
-                                                                    <p className='state-title'>{state.title}</p>
-                                                                    </div>
-                                                                )
-                                                            ))}
+                                                            {states.map(state => {
+                                                                // Check if reservation state is 3 and the start time is equal or greater than current time
+                                                                if (reservation.state === 3 && timesMap[time.start_time_index] <= getCurrentTime(timezone)) {
+                                                                    reservation.state = 1; // Update the state to 1
+                                                                }
+
+                                                                return (
+                                                                    reservation.state === state.id && (
+                                                                        <div key={state.id} className='popup-window-item'>
+                                                                            <img className='state-img' src={state.imgSrc} alt={state.title} />
+                                                                            <p className='state-title'>{state.title}</p>
+                                                                        </div>
+                                                                    )
+                                                                );
+                                                            })}
                                                         </div>
                                                         <div className='reservation-customer-info'>
                                                             <p><span>Name:</span> {reservation.name}</p>
@@ -1004,14 +1116,21 @@ const Reservations = () => {
                                         <div className='reservation-info'>
                                                     <div className='reservation-state-info' onClick={() => {
                                                         toggleStatePopup(reservation);}}>
-                                                        {states.map(state => (
-                                                            reservation.state === state.id && (
-                                                                <div key={state.id} className='popup-window-item'>
-                                                                <img className='state-img' src={state.imgSrc} alt={state.title} />
-                                                                <p className='state-title'>{state.title}</p>
-                                                                </div>
-                                                            )
-                                                        ))}
+                                                        {states.map(state => {
+                                                                // Check if reservation state is 3 and the start time is equal or greater than current time
+                                                                if (reservation.state === 3 && timesMap[time.start_time_index] <= getCurrentTime(timezone)) {
+                                                                    reservation.state = 1; // Update the state to 1
+                                                                }
+
+                                                                return (
+                                                                    reservation.state === state.id && (
+                                                                        <div key={state.id} className='popup-window-item'>
+                                                                            <img className='state-img' src={state.imgSrc} alt={state.title} />
+                                                                            <p className='state-title'>{state.title}</p>
+                                                                        </div>
+                                                                    )
+                                                                );
+                                                            })}
                                                     </div>
                                                     <div className='reservation-customer-info'>
                                                         <p><span>Name:</span> {reservation.name}</p>
@@ -1060,14 +1179,21 @@ const Reservations = () => {
                                         <div className='reservation-info'>
                                                     <div className='reservation-state-info' onClick={() => {
                                                         toggleStatePopup(reservation);}}>
-                                                        {states.map(state => (
-                                                            reservation.state === state.id && (
-                                                                <div key={state.id} className='popup-window-item'>
-                                                                <img className='state-img' src={state.imgSrc} alt={state.title} />
-                                                                <p className='state-title'>{state.title}</p>
-                                                                </div>
-                                                            )
-                                                        ))}
+                                                        {states.map(state => {
+                                                                // Check if reservation state is 3 and the start time is equal or greater than current time
+                                                                if (reservation.state === 3 && timesMap[time.start_time_index] <= getCurrentTime(timezone)) {
+                                                                    reservation.state = 1; // Update the state to 1
+                                                                }
+
+                                                                return (
+                                                                    reservation.state === state.id && (
+                                                                        <div key={state.id} className='popup-window-item'>
+                                                                            <img className='state-img' src={state.imgSrc} alt={state.title} />
+                                                                            <p className='state-title'>{state.title}</p>
+                                                                        </div>
+                                                                    )
+                                                                );
+                                                            })}
                                                     </div>
                                                     <div className='reservation-customer-info'>
                                                         <p><span>Name:</span> {reservation.name}</p>
@@ -1126,9 +1252,14 @@ const Reservations = () => {
                                             <div className='order-items'>
                                                 <p><span>Menu Items:</span></p>
                                                 <ul>
-                                                    {order.order_items.map((item, i) => (
-                                                        <li key={i}>&#8226; {menuMap[item.menu_item_id].name} x {item.quantity} : {item.quantity*menuMap[item.menu_item_id].price}€</li>
-                                                    ))}
+                                                {order.order_items.map((item, i) => {
+                                                    const menuItem = menuMap[item.menu_item_id];
+                                                    const totalPrice = item.quantity * menuItem.price + item.ingredients.reduce((acc, ing) => acc + ing.price, 0);
+                                                    
+                                                    return (
+                                                        <li key={i}>&#8226; {menuItem.name} x {item.quantity} : {totalPrice}€</li>
+                                                    );
+                                                })}
                                                 </ul>
                                             </div>
                                             <p><span>Total:</span> {calculateTotal(order.order_items)}€</p>
@@ -1200,15 +1331,66 @@ const Reservations = () => {
                                     <div key={index} className="menu-category-section">
                                         <h2>{category}</h2>
                                         <ul>
-                                            {Object.entries(menuMap).map(([itemId, item]) =>  (
-                                                // Check if the item belongs to the current category
-                                                item.category === category && (
-                                                    <div key={itemId} className="menu-item">
-                                                        <p>ID: {item && itemId}</p>
-                                                        <p>Name: {item && item.name}</p>
-                                                        <p>Price: {item && item.price}€</p>
-                                                    </div>
-                                                )
+                                            {Object.entries(menuMap).map(([itemId, item], itemIndex) => (
+                                                <div key={itemId} className="menu-item">
+                                                    {item.category === category && (
+                                                        <>
+                                                            <div className='menu-item-information'>
+                                                                <button className="toggle-ingredients-button" onClick={() => toggleMenuItem(itemIndex)}>
+                                                                    <span dangerouslySetInnerHTML={{__html: expandedMenuItems[itemIndex] ?  '&#9660;' : '&#9650;'}} />
+                                                                </button>
+                                                                <p>ID: {item && itemId}</p>
+                                                                <p>Name: {item && item.name}</p>
+                                                                <p>Price: {item && item.price}€</p>
+                                                            </div>
+                                                            <div className='menu-item-ingredients'>
+                                                            {expandedMenuItems[itemIndex] && (
+                                                                <>
+                                                                    <p>Ingredients:</p>
+                                                                    <ul>
+                                                                        {item.ingredients.map((ingredient, index) => (
+                                                                            <li key={index} className='ingredient-information'>
+                                                                                <div>Name: {ingredient.name}</div>
+                                                                                <div>Price: 
+                                                                                <input
+                                                                                type="number"
+                                                                                value={ingredient.price}
+                                                                                onChange={(e) => {
+                                                                                    const newPrice = parseFloat(e.target.value);
+                                                                                    updateIngredientPrice(itemIndex+1, index, newPrice); // Call the updateIngredientPrice function
+                                                                                }}
+                                                                                />
+                                                                                </div>
+                                                                            </li>
+                                                                        ))}
+                                                                        <li className='new-ingredient-information'>
+                                                                            <div>Name:
+                                                                                <input
+                                                                                    type="text"
+                                                                                    placeholder="Ingredient Name"
+                                                                                    value={newIngredientName}
+                                                                                    onChange={(e) => setNewIngredientName(e.target.value)}
+                                                                                /> 
+                                                                            </div>
+                                                                            <div>
+                                                                            Price:
+                                                                            <input
+                                                                                type="number"
+                                                                                placeholder="Ingredient Price"
+                                                                                value={newIngredientPrice}
+                                                                                onChange={(e) => setNewIngredientPrice(parseFloat(e.target.value))}
+                                                                            />
+                                                                            </div>
+                                                                            <button onClick={() => addIngredientToItem(itemIndex+1)}>+</button>
+                                                                        </li>
+                                                                    </ul>
+                                                                    
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                        </>
+                                                    )}
+                                                </div>
                                             ))}
                                         </ul>
                                     </div>
@@ -1270,11 +1452,12 @@ const Reservations = () => {
                                 <button className="add-table-button">+</button>
                             </div>
                         }
-                        {mode===4 && 
+                        {mode===4 && <>
                             <div className='add-menu-item-container' onClick={() => {
                                 toggleAddMenuItemPopup();}}>
                                 <button className="add-menu-item-button">+</button>
                             </div>
+                        </>   
                         }
                     </div>
                 )}

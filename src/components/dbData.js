@@ -450,79 +450,103 @@ const infoDoc = {
                 {
                     id:1,
                     name:"Chicken filet",
-                    price: 12
+                    price: 12,
+                    ingredients: [
+                        {
+                        name: "Fries",
+                        price: 2
+                        },
+                        {
+                            name: "Rice",
+                            price: 0
+                        }
+                ]
                 },
                 {
                     id:2,
                     name:"Greek salad",
-                    price: 9
+                    price: 9,
+                    ingredients: []
                 },
                 {
                     id:3,
                     name:"Gemista",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id:4,
                     name:"Rooster with red sauce",
-                    price: 10
+                    price: 10,
+                    ingredients: []
                 },
                 {
                     id:5,
                     name:"Patsitsio",
-                    price: 6.5
+                    price: 6.5,
+                    ingredients: []
                 },
                 {
                     id:6,
                     name:"Beef with rice",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id:7,
                     name:"Beetroot soup",
-                    price: 6.5
+                    price: 6.5,
+                    ingredients: []
                 },
                 {
                     id:8,
                     name:"Steak with fried potatoes",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id:9,
                     name:"Fajitas",
-                    price: 12
+                    price: 12,
+                    ingredients: []
                 },
                 {
                     id:10,
                     name:"Enchiladas",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id:11,
                     name:"Francesinha",
-                    price: 12
+                    price: 12,
+                    ingredients: []
                 },
                 {
                     id:12,
                     name:"Bacalhau a bras",
-                    price: 15
+                    price: 15,
+                    ingredients: []
                 }
                 ,
                 {
                     id:13,
                     name:"Pizza",
-                    price: 12
+                    price: 12,
+                    ingredients: []
                 }
                 ,
                 {
                     id:14,
                     name:"Burger with beef",
-                    price: 12
+                    price: 12,
+                    ingredients: []
                 },
                 {
                     id:15,
                     name:"Burger with chicken",
-                    price: 13
+                    price: 13,
+                    ingredients: []
                 }
             ]
         },
@@ -532,57 +556,68 @@ const infoDoc = {
                 {
                     id:16,
                     name:"Saganaki",
-                    price: 6
+                    price: 6,
+                    ingredients: []
                 },
                 {
                     id: 17,
                     name: "Bruschetta",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id: 18,
                     name: "Calamari",
-                    price: 10
+                    price: 10,
+                    ingredients: []
                 },
                 {
                     id: 19,
                     name: "Sausage with cheese",
-                    price: 9
+                    price: 9,
+                    ingredients: []
                 },
                 {
                     id: 20,
                     name: "Stuffed Mushrooms",
-                    price: 7
+                    price: 7,
+                    ingredients: []
                 },
                 {
                     id: 21,
                     name: "Garlic Bread",
-                    price: 5
+                    price: 5,
+                    ingredients: []
                 },
                 {
                     id: 22,
                     name: "Spinach Dip",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id: 23,
                     name: "Mozzarella Sticks",
-                    price: 7
+                    price: 7,
+                    ingredients: []
                 },
                 {
                     id: 24,
                     name: "Shrimp Cocktail",
-                    price: 12
+                    price: 12,
+                    ingredients: []
                 },
                 {
                     id: 25,
                     name: "Fried Zucchini",
-                    price: 6
+                    price: 6,
+                    ingredients: []
                 },
                 {
                     id: 26,
                     name: "Artichoke Dip",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 }
             ]
         },
@@ -592,22 +627,26 @@ const infoDoc = {
                 {
                     id: 27,
                     name: "Cheesecake",
-                    price: 9
+                    price: 9,
+                    ingredients: []
                 },
                 {
                     id: 28,
                     name: "Chocolate Lava Cake",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id: 29,
                     name: "Tiramisu",
-                    price: 7
+                    price: 7,
+                    ingredients: []
                 },
                 {
                     id: 30,
                     name: "Apple Pie",
-                    price: 6
+                    price: 6,
+                    ingredients: []
                 }
             ]
         },
@@ -617,52 +656,62 @@ const infoDoc = {
                 {
                     id: 31,
                     name: "Coca-Cola",
-                    price: 2
+                    price: 2,
+                    ingredients: []
                 },
                 {
                     id: 32,
                     name: "Lemonade",
-                    price: 3
+                    price: 3,
+                    ingredients: []
                 },
                 {
                     id: 33,
                     name: "Iced Tea",
-                    price: 3
+                    price: 3,
+                    ingredients: []
                 },
                 {
                     id: 34,
                     name: "Orange Juice",
-                    price: 4
+                    price: 4,
+                    ingredients: []
                 },
                 {
                     id: 35,
                     name: "Margarita",
-                    price: 8
+                    price: 8,
+                    ingredients: []
                 },
                 {
                     id: 36,
                     name: "Mojito",
-                    price: 7
+                    price: 7,
+                    ingredients: []
                 },
                 {
                     id: 37,
                     name: "Cosmopolitan",
-                    price: 9
+                    price: 9,
+                    ingredients: []
                 },
                 {
                     id: 38,
                     name: "Beer",
-                    price: 5
+                    price: 5,
+                    ingredients: []
                 },
                 {
                     id: 39,
                     name: "Wine",
-                    price: 6
+                    price: 6,
+                    ingredients: []
                 },
                 {
                     id: 40,
                     name: "Milkshake",
-                    price: 5
+                    price: 5,
+                    ingredients: []
                 }
                 
             ]
@@ -673,7 +722,8 @@ const infoDoc = {
     numberOfDaysToShowToCustomers: 14,
     maxCapacity: 7,
     maxReservationDurationIndexNumber: 7,
-    name: "Mantania"
+    name: "Mantania",
+    timeZone: "Europe/Athens"
 }
 
 export default infoDoc;

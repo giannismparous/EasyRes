@@ -21,6 +21,8 @@
 
 .category-section ul {
     padding-top: 10px;
+    margin: 0;
+    padding-left: 0;
 }
 
 .category-section li {
@@ -29,25 +31,25 @@
 
 .add-more-button {
     background-color: green;
-    font-size: 40px;
+    font-size: 23px;
     border-radius: 500px;
-    width: 60px; /* Set width and height to the same value for circular shape */
-    height: 60px; /* Set width and height to the same value for circular shape */
+    width: 40px; /* Set width and height to the same value for circular shape */
+    height: 40px; /* Set width and height to the same value for circular shape */
 }
 
 .remove-more-button {
     background-color: red;
-    font-size: 40px;
+    font-size: 23px;
     border-radius: 500px;
-    width: 60px; /* Set width and height to the same value for circular shape */
-    height: 60px; /* Set width and height to the same value for circular shape */
+    width: 40px; /* Set width and height to the same value for circular shape */
+    height: 40px; /* Set width and height to the same value for circular shape */
 }
 
 .add-button {
-    font-size: 40px;
+    font-size: 23px;
     border-radius: 500px;
-    width: 60px; /* Set width and height to the same value for circular shape */
-    height: 60px; /* Set width and height to the same value for circular shape */
+    width: 40px; /* Set width and height to the same value for circular shape */
+    height: 40px; /* Set width and height to the same value for circular shape */
 }
 
 .send-order-button {
@@ -59,16 +61,48 @@
     width: auto;
 }
 
+.order-menu-item-section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px;
+    background-color: rgb(206, 206, 206);
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    gap: 20px;
+    border-radius: 50px;
+}
+
 .order-menu-item {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Three columns: auto, 1fr (1 fraction), auto */
     align-items: center;
     text-align: center;
-    font-size: 50px;
+    font-size: 30px;
+}
+
+.ordered-menu-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
 }
 
 .order-menu-item p{
     width: auto;
+}
+
+.ordered-menu-item input[type="text"] {
+    width: 80%;
+    height: 80%;
+}
+
+.order-menu-item-ingredients {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
 .notes-input {
@@ -78,7 +112,7 @@
 }
 
 .order-menu-item p{
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .order-menu-item input {

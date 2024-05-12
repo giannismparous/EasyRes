@@ -797,15 +797,20 @@ export const fetchInfoForCustomer = async (collectionKey) => {
     infoReturned[1]=infoDoc.data().unavailable_days;
     
     const tablesCapacityMap = {};
+    const tablesSmokeFriendlyMap = {};
+
 
     for (const table of infoDoc.data().tables) {
         tablesCapacityMap[table.id] = table.capacity;
+        tablesSmokeFriendlyMap[table.id] = table.smokeFriendly;
     }
     infoReturned[2]=tablesCapacityMap;
 
     infoReturned[3]=infoDoc.data().numberOfDaysToShowToCustomers;
     infoReturned[4]=infoDoc.data().maxCapacity;
     infoReturned[5]=infoDoc.data().maxReservationDurationIndexNumber;
+    infoReturned[6]=tablesSmokeFriendlyMap;
+
     console.log("Info fetched:");
     console.log(infoDoc.data());
     return infoReturned;
@@ -1217,6 +1222,51 @@ export const addNewMenuItem = async (collectionKey, menuItemCategory, menuItemId
       await setDoc(infoRef, { menu: menu }, { merge: true });
 
       console.log(`Added new menu item table with id: ${menuItemId}, name: ${menuItemName}, price: ${menuItemPrice}, category ${menuItemCategory}`);
+      
+    } else {
+      console.log(`Info doc does not exist.`);
+    }
+
+  } catch (error) {
+
+    console.error("Error data", error);
+
+  }
+
+};
+
+function convertMenuMapToMenu(menuMap) {
+  const menu = [];
+  Object.entries(menuMap).forEach(([id, item]) => {
+      const categoryIndex = menu.findIndex(cat => cat.category === item.category);
+      const newItem = { id: parseInt(id), ...item };
+      if (categoryIndex === -1) {
+          menu.push({ category: item.category, items: [newItem] });
+      } else {
+          menu[categoryIndex].items.push(newItem);
+      }
+  });
+  return menu;
+}
+
+export const updateMenu = async (collectionKey, menuMap) => {
+
+  
+  const sampleRestaurantRef = collection(db, collectionKey);
+  const infoRef = doc(sampleRestaurantRef, "info");
+
+  try {
+
+    const infoDoc = await getDoc(infoRef);
+
+    if (infoDoc.exists()) {
+
+      // Update tables array in Firestore
+      const tempNewMenu=convertMenuMapToMenu(menuMap);
+      await updateDoc(infoRef, { menu: tempNewMenu});
+
+      console.log(`Updated menu: `);
+      console.log(`${tempNewMenu}`);
       
     } else {
       console.log(`Info doc does not exist.`);

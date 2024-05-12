@@ -12,7 +12,7 @@ const Order = () => {
     const [menuMap, setMenuMap] = useState({});
     const [order, setOrder] = useState({});
     const [uniqueCategories, setUniqueCategories] = useState([]);
-
+    const [orderItemsCounter,setOrderItemsCounter] = useState(0);
 
     useEffect(() => {
 
@@ -27,7 +27,7 @@ const Order = () => {
 
                 response.forEach(category => {
                     category.items.forEach(item => {
-                        menuItemsMap[item.id] = { name: item.name, price: item.price, category: category.category };
+                        menuItemsMap[item.id] = { name: item.name, price: item.price, category: category.category, ingredients: item.ingredients };
                         uniqueCategoriesSet.add(category.category); // Add category name to set
                     });
                 });
@@ -45,8 +45,8 @@ const Order = () => {
             try {
                 const response = await fetchOrder(collectionKey,selectedDate,parseInt(reservationId));
                 setOrder(response);
+                setOrderItemsCounter(response.order_items.length)
                 console.log("Order fetched:");
-                console.log(response);
 
             } catch (error) {
                 console.error("Error checking document: ", error);
@@ -60,25 +60,29 @@ const Order = () => {
     }, [collectionKey,selectedDate,reservationId]); // Empty dependency array ensures that the effect runs only once when the component is mounted
 
     const handleAddToOrder = (itemId) => {
-        
-        const newOrderItem = { menu_item_id: itemId, quantity: 1 };
-        
-        console.log(order);
-        
+        const selectedMenuItem = menuMap[itemId];
+        const orderItemId=orderItemsCounter+1;
+        const newOrderItem = {
+            order_item_id: orderItemId,
+            menu_item_id: itemId,
+            quantity: 1,
+            ingredients: [] // Pass ingredients to the order item
+        };
+
         setOrder(prevOrder => ({
             ...prevOrder,
             order_items: [...prevOrder.order_items, newOrderItem]
         }));
 
-        console.log(newOrderItem);
+        setOrderItemsCounter(orderItemId)
 
     };
 
-    const handleIncreaseQuantity = (itemId) => {
+    const handleIncreaseQuantity = (orderItemId) => {
         setOrder(prevOrder => ({
             ...prevOrder,
             order_items: prevOrder.order_items.map(item => {
-                if (item.menu_item_id === itemId) {
+                if (item.order_item_id === orderItemId) {
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;
@@ -86,12 +90,12 @@ const Order = () => {
         }));
     };
 
-    const handleDecreaseQuantity = (itemId) => {
+    const handleDecreaseQuantity = (orderItemId) => {
         setOrder(prevOrder => ({
             ...prevOrder,
             order_items: prevOrder.order_items
                 .map(item => {
-                    if (item.menu_item_id === itemId) {
+                    if (item.order_item_id === orderItemId) {
                         return { ...item, quantity: item.quantity - 1 };
                     }
                     return item;
@@ -108,7 +112,7 @@ const Order = () => {
             console.log("Response:");
             console.log(response);
             printOrderSummary(); // Print order summary after sending order
-            navigate('/sample_restaurant/reservations');
+            navigate('/reservations/sample-restaurant');
         } catch (error) {
             console.error("Error sending order: ", error);
             // Handle errors, e.g., display an error message to the user
@@ -191,6 +195,27 @@ const Order = () => {
         }));
     };
 
+
+    const handleIngredientCheckboxChange = (event, orderItemId, ingredient) => {
+        const isChecked = event.target.checked;
+        setOrder(prevOrder => ({
+            ...prevOrder,
+            order_items: prevOrder.order_items.map(item => {
+                if (item.order_item_id === orderItemId) {
+                    const updatedIngredients = isChecked 
+                        ? [...item.ingredients, ingredient] // Add the ingredient
+                        : item.ingredients.filter(ing => ing.name !== ingredient.name); // Remove the ingredient
+    
+                    return { 
+                        ...item,
+                        ingredients: updatedIngredients
+                    };
+                }
+                return item;
+            })
+        }));
+    };
+
     return (
         <div className='order-page'>
             {uniqueCategories.map((category, index) => (
@@ -199,28 +224,48 @@ const Order = () => {
                     <ul>
                         {Object.entries(menuMap).map(([itemId, item]) => {
                             if (item.category === category) {
-                                const orderedItem = order.order_items.find(orderItem => orderItem.menu_item_id === parseInt(itemId));
+                                const orderedItems = order.order_items.filter(orderItem => orderItem.menu_item_id === parseInt(itemId));
                                 return (
-                                    <li key={itemId} className='order-menu-item'>
-                                        <div className='order-menu-quantity'>
-                                            {orderedItem ? (
-                                                <span className="quantity">
-                                                    <button className="remove-more-button" onClick={() => handleDecreaseQuantity(parseInt(itemId))}>-</button>
-                                                    {orderedItem.quantity}
-                                                    <button className="add-more-button" onClick={() => handleIncreaseQuantity(parseInt(itemId))}>+</button>
-                                                </span>
-                                            ) : (
+                                    <li key={itemId} className='order-menu-item-section'>
+                                        <div className='order-menu-item'>
+                                            <div className='order-menu-quantity'>
                                                 <button className="add-button" onClick={() => handleAddToOrder(parseInt(itemId))}>+</button>
-                                            )}
+                                            </div>
+                                            <p>{item.name}</p>
+                                            <p>{item.price}</p>
                                         </div>
-                                        <p>{item.name}</p>
-                                        {orderedItem && (<input
-                                        type="text"
-                                        placeholder="Notes"
-                                        value={orderedItem ? orderedItem.notes : ''}
-                                        onChange={(e) => handleNotesChange(parseInt(itemId), e.target.value)}
-                                        className='notes-input'
-                                        />)}
+                                        {orderedItems.map((orderedItem, index) => (
+                                            <div key={index} className="ordered-menu-item">
+                                                <span className="quantity">
+                                                    <button className="remove-more-button" onClick={() => handleDecreaseQuantity(parseInt(orderedItem.order_item_id))}>-</button>
+                                                    {orderedItem.quantity}
+                                                    <button className="add-more-button" onClick={() => handleIncreaseQuantity(parseInt(orderedItem.order_item_id))}>+</button>
+                                                </span>
+                                                <div className='order-menu-item-ingredients'>
+                                                    {item.ingredients.map((ingredient, index) => (
+                                                        <React.Fragment key={index}>
+                                                            <span>{ingredient.name}</span>
+                                                            {ingredient.price>0 && <span>(+{ingredient.price}&#x20AC;)</span>}
+                                                            <input
+                                                                type="checkbox"
+                                                                value="ingredient"
+                                                                defaultChecked={orderedItem.ingredients.some(
+                                                                    orderedIngredient => orderedIngredient.name === ingredient.name
+                                                                )}
+                                                                onChange={(event) => handleIngredientCheckboxChange(event, orderedItem.order_item_id, ingredient)}
+                                                            />
+                                                        </React.Fragment>
+                                                    ))}
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Notes"
+                                                    value={orderedItem ? orderedItem.notes : ''}
+                                                    onChange={(e) => handleNotesChange(parseInt(itemId), e.target.value)}
+                                                    className='notes-input'
+                                                />
+                                            </div>
+                                        ))}
                                     </li>
                                 );
                             } else {

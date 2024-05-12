@@ -492,7 +492,7 @@ margin-top: 0px;
     margin-top: 15px;
     margin-left: 150px;
     /* Add any additional styling as needed */
-    }
+}
 
 .calendar-button:hover{
     background-color: transparent;
@@ -990,13 +990,13 @@ margin: 0;
 }
 
 .menu-container p{
-    font-size: 40px;
+    font-size: 25px;
     color: rgb(0, 9, 128);
 }
 
 .menu-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     width: 100%;
@@ -1069,6 +1069,7 @@ margin: 0;
 
 .menu-category-section{
     text-align: center;
+    width: 100%;
 }
 
 .menu-category-section h2 {
@@ -1102,4 +1103,102 @@ margin: 0;
 .settings-fields {
     display: flex;
     flex-direction: column;
+}
+
+.reservations-container .toggle-ingredients-button {
+    width: 10px;
+    color: black;
+    background-color: transparent;
+}
+
+.menu-item-information {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.001fr 1fr 1fr 1fr;
+}
+
+.menu-item-ingredients p{
+    margin-top: 0px;
+}
+
+.menu-item-ingredients ul {
+    list-style-type: disc; /* Use disc bullets */
+}
+
+.menu-item-ingredients ul li {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.menu-item-ingredients button{
+    width: 30px;
+    background-color: green;
+    border-radius: 100px;
+}
+
+.ingredient-information {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  1fr 1fr ;
+    grid-column-gap: 0px;
+}
+
+.new-ingredient-information {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  1fr 1fr 0.1fr;
+    grid-column-gap: 20px;
+}
+
+.save-blue-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    z-index: 2000;
+    position: fixed;
+    width: auto;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: 100px;
+    /* Add any additional styling as needed */
+}
+
+.save-blue-button img {
+    width: 50px ;
+    margin: 0;
+    /* Add any additional styling as needed */
+}
+
+.save-blue-button:hover{
+    background-color: transparent;
+}
+
+.accept-button {
+    color: white;
+    background-color: green;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+.refresh-button {
+    background-color: transparent; /* Set the background color to transparent */
+    border: none;
+    z-index: 2000;
+    position: fixed;
+    width: auto;
+    padding: 0;
+    right: 10px;
+    margin-top: 12px;
+    margin-right: 60px;
+    /* Add any additional styling as needed */
+}
+
+.refresh-button:hover {
+    background-color: transparent; 
+}
+
+.refresh-button img {
+    width: 40px ;
+    margin: 0;
+    /* Add any additional styling as needed */
 }

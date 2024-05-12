@@ -13,7 +13,7 @@ const Login = () => {
     try {
       const successfulLogin= await attemptLogin(username, password);
       if (successfulLogin){
-        navigate("/sample_restaurant/reservations");
+        navigate("/reservations/sample-restaurant");
       }
       // If login is successful, you might want to redirect the user to another page or update UI accordingly
       

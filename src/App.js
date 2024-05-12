@@ -19,13 +19,13 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/debug" element={<Debug />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/reserve" element={<Reserve />} />
-        <Route path="/sample_restaurant/reservations" element={<Reservations />} />
+        <Route path="/debug/:collectionKey" element={<Debug />} />
+        <Route path="/login/:collectionKey" element={<Login />} />
+        <Route path="/reserve/:collectionKey/:mode" element={<Reserve />} />
+        <Route path="/reservations/:collectionKey" element={<Reservations />} />
         <Route path="/order/:collectionKey/:selectedDate/:reservationId" element={<Order/>} />
         <Route path="/reserve/:collectionKey/:reservationDate/:reservationStartTimeIndex/:reservationEndTimeIndex/:tableNumber" element={<ReserveTable/>} />
-        <Route path="/projects/0" element={<SamplePage redirectToSample={false} modelPath="https://giannismparous.github.io/test_vr/"/>} /> 
+        <Route path="/reserve/:collectionKey/vr" element={<SamplePage redirectToSample={false} modelPath="https://giannismparous.github.io/test_vr/"/>} /> 
       </Routes>
     </div>
   );
