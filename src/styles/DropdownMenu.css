@@ -32,7 +32,7 @@
   padding-left: 12px; /* Add some padding for button content */
 }
 
-.dropdown.open .reservations-button.active, .dropdown.open .orders-button.active, .dropdown.open .tables-button.active, .dropdown.open .menu-button.active, .dropdown.open .settings-button.active, .dropdown.open .dots-button.active {
+.dropdown.open .reservations-button.active, .dropdown.open .orders-button.active, .dropdown.open .tables-button.active, .dropdown.open .menu-button.active, .dropdown.open .floorplan-button.active, .dropdown.open .settings-button.active, .dropdown.open .dots-button.active {
   background-color: #007bff; /* Set border color to blue when active */
   border-radius: 9999px;
 }
@@ -117,6 +117,23 @@ background-color: transparent;
 width: 40px ;
 height: 40px;
 margin: 0;
+}
+
+.floorplan-button {
+  background-color: transparent;
+  border: none;
+  width: auto;
+  width: auto;
+}
+  
+.floorplan-button:hover{
+  background-color: transparent;
+}
+
+.floorplan-button img {
+  width: 40px ;
+  height: 40px;
+  margin: 0;
 }
 
 .settings-button {

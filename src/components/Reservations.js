@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Reservations.css';
-import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, updateMenu, updateReservation, updateRestaurantInfo, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
+import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, updateMenu, updateReservation, updateRestaurantInfo, updateTablesMap, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
 import { ClockLoader } from 'react-spinners';
 import CalendarYearly from './CalendarYearly';
 import { Link, useParams } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu'
+import MapComponent from './MapComponent';
 
 const sortByImg = '../icons/sort_by.png';
 const calendarOpenImg = '../icons/calendar-open-blue.png';
@@ -381,6 +382,13 @@ const Reservations = () => {
 
     };
 
+    const updateTablesMapToServer = async () => {
+
+        const response = await updateTablesMap(collectionKey, tables, selectedDate, unavailableTables);
+        console.log(response);
+
+    };
+
     const handleDateSelect = (date) => {
         console.log("Selected date:" + date);
         setSelectedDate(date);
@@ -649,6 +657,7 @@ const Reservations = () => {
         else if (mode === 3) setSelectedSortOption(7);
         else if (mode === 4) setSelectedSortOption(8);
         else if (mode === 5) setSelectedSortOption(9);
+        else if (mode === 6) setSelectedSortOption(10);
       };
 
       const calculateTotal = (orderItems) => {
@@ -747,6 +756,11 @@ const Reservations = () => {
                 </button>
                 {mode===4 && !showCalendar && 
                 <button className={`save-blue-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={() => updateMenuToServer()}>
+                    <img src={saveBlueImg} className={showEditOpen ? 'save-open-blue' : ''} alt="Save Icon" width="25px" color='black'/>
+                </button>
+                }
+                {mode===5 && !showCalendar && 
+                <button className={`save-blue-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={() => updateTablesMapToServer()}>
                     <img src={saveBlueImg} className={showEditOpen ? 'save-open-blue' : ''} alt="Save Icon" width="25px" color='black'/>
                 </button>
                 }
@@ -1397,7 +1411,11 @@ const Reservations = () => {
                                 ))}
                             </div>
                         )}
-                        {selectedSortOption === 9 && <div className='settings-container'>
+                        {selectedSortOption ===9 && <div className='map'>
+                            <MapComponent tables={tables} unavailableTables={unavailableTables} setTables={setTables} setUnavailableTables={setUnavailableTables}>
+                            </MapComponent>    
+                        </div>}
+                        {selectedSortOption === 10 && <div className='settings-container'>
                             <div className="settings-header">
                                 <h2>Settings</h2>
                             </div>

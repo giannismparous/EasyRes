@@ -394,53 +394,72 @@ const infoDoc = {
         {
             id: 1,
             capacity: 4,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 100,
+            y:100
         },
         {
             id: 2,
             capacity: 3,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 200,
+            y:100
         },
         {
             id: 3,
             capacity: 2,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 300,
+            y:100
         },
         {
             id: 4,
             capacity: 2,
-            smokeFriendly: false
+            smokeFriendly: false,
+            x: 400,
+            y:100
         },
         {
             id: 5,
             capacity: 4,
-            smokeFriendly: false
+            smokeFriendly: false,
+            x: 500,
+            y:100
         },
         {
             id: 6,
             capacity: 6,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 600,
+            y:100
         },
         {
             id: 7,
             capacity: 4,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 700,
+            y:100
         },
         {
             id: 8,
             capacity: 3,
-            smokeFriendly: false
+            smokeFriendly: false,
+            x: 800,
+            y:100
         },
         {
             id: 9,
             capacity: 7,
-            smokeFriendly: true
+            smokeFriendly: true,
+            x: 900,
+            y:100
         },
         {
             id: 10,
             capacity: 5,
-            smokeFriendly: false
-
+            smokeFriendly: false,
+            x: 1000,
+            y:100
         },
     ],
     menu: [

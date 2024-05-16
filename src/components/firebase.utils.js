@@ -1309,6 +1309,43 @@ export const updateRestaurantInfo = async (collectionKey, restaurantName, maxRes
 
 };
 
+export const updateTablesMap = async (collectionKey, tables, date, unavailableTables) => {
+
+  
+  const sampleRestaurantRef = collection(db, collectionKey);
+  const infoRef = doc(sampleRestaurantRef, "info");
+  const dateRef = doc(sampleRestaurantRef, date);
+
+  try {
+
+    const infoDoc = await getDoc(infoRef);
+    const dateDoc = await getDoc(dateRef);
+
+    if (infoDoc.exists() && dateDoc.exists()) {
+
+      // Update tables array in Firestore
+      await updateDoc(infoRef, { tables: tables });
+      await updateDoc(dateRef, {
+        'unavailable_tables': unavailableTables
+      });
+
+      console.log(`Updated tables:`);
+      console.log(tables);
+      console.log(`Updated unavailable tables for date ${date}:`);
+      console.log(unavailableTables);
+      
+    } else {
+      console.log(`Info doc does not exist.`);
+    }
+
+  } catch (error) {
+
+    console.error("Error data", error);
+
+  }
+
+};
+
 export const updateUnavailableDays = async (collectionKey,unavailableDays) => {
 
   const sampleRestaurantRef = collection(db, collectionKey);
@@ -1334,18 +1371,18 @@ export const updateUnavailableDays = async (collectionKey,unavailableDays) => {
 export const updateUnavailableTables = async (collectionKey,date,unavailableTableId) => {
 
   const sampleRestaurantRef = collection(db, collectionKey);
-  const infoRef = doc(sampleRestaurantRef, date);
-  const infoDoc = await getDoc(infoRef);
+  const dateRef = doc(sampleRestaurantRef, date);
+  const dateDoc = await getDoc(dateRef);
 
-  if (infoDoc.exists()) {
+  if (dateDoc.exists()) {
 
-    const unavailableTables=infoDoc.data().unavailable_tables;
+    const unavailableTables=dateDoc.data().unavailable_tables;
 
     const updatedUnavailableTables = unavailableTables.includes(unavailableTableId)
   ? unavailableTables.filter(id => id !== unavailableTableId)
   : [...unavailableTables, unavailableTableId];
 
-    await updateDoc(infoRef, {
+    await updateDoc(dateRef, {
       'unavailable_tables': updatedUnavailableTables
     });
 

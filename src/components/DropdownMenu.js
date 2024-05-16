@@ -11,6 +11,8 @@ const dotsClosedImg = '../icons/dots-blue.png';
 const dotsOpenImg = '../icons/dots-open.png'; 
 const menuOpenImg = '../icons/menu-open.png';
 const menuClosedImg = '../icons/menu-closed.png';
+const floorplanOpenImg = '../icons/floorplan-open.png';
+const floorplanClosedImg = '../icons/floorplan-closed.png';
 const settingsOpenImg = '../icons/settings-open.png';
 const settingsClosedImg = '../icons/settings-closed.png';
 
@@ -62,8 +64,11 @@ function DropdownMenu({ changeMode, currentMode}) {
           <button className={`menu-button ${activeButton === 'menu' || currentMode === 4 ? 'active' : ''}`} onClick={() => handleButtonClick('menu', 4)}>
             <img src={activeButton === 'menu' || currentMode === 4 ? menuOpenImg : menuClosedImg} alt="Menu Icon" width="25px" color='black' />
           </button>
-          <button className={`settings-button ${activeButton === 'settings' || currentMode === 5 ? 'active' : ''}`} onClick={() => handleButtonClick('settings', 5)}>
-            <img src={activeButton === 'settings' || currentMode === 5 ? settingsOpenImg : settingsClosedImg} alt="Settings Icon" width="25px" color='black' />
+          <button className={`floorplan-button ${activeButton === 'floorplan' || currentMode === 5 ? 'active' : ''}`} onClick={() => handleButtonClick('floorplan', 5)}>
+            <img src={activeButton === 'floorplan' || currentMode === 5 ? floorplanOpenImg : floorplanClosedImg} alt="Floorplan Icon" width="25px" color='black' />
+          </button>
+          <button className={`settings-button ${activeButton === 'settings' || currentMode === 6 ? 'active' : ''}`} onClick={() => handleButtonClick('settings', 6)}>
+            <img src={activeButton === 'settings' || currentMode === 6 ? settingsOpenImg : settingsClosedImg} alt="Settings Icon" width="25px" color='black' />
           </button>
         </>
       )}
