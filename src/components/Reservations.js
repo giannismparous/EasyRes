@@ -177,7 +177,7 @@ const Reservations = () => {
                 console.log("Response:");
                 console.log(response);
 
-                if (response===true){
+                if (response!==undefined && response !==null){
                     setIdsReservations(response[3]);
                     setFilteredIdsReservations(response[3]);
                     setTimesReservations(response[4]);
@@ -187,6 +187,8 @@ const Reservations = () => {
                     setTablesReservations(response[6]);
                     setFilteredTablesReservations(response[6]);
                     setIdsOrders(response[7]);
+                    console.log("EDWWWWW")
+                    console.log(response[7])
                     setFilteredIdsOrders(response[7]);
                     setReservationsOrders(response[8]);
                     setFilteredReservationsOrders(response[8]);
