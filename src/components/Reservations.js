@@ -177,18 +177,21 @@ const Reservations = () => {
                 console.log("Response:");
                 console.log(response);
 
-                setIdsReservations(response[3]);
-                setFilteredIdsReservations(response[3]);
-                setTimesReservations(response[4]);
-                setFilteredTimesReservations(response[4]);
-                setNamesReservations(response[5]);
-                setFilteredNamesReservations(response[5]);
-                setTablesReservations(response[6]);
-                setFilteredTablesReservations(response[6]);
-                setIdsOrders(response[7]);
-                setFilteredIdsOrders(response[7]);
-                setReservationsOrders(response[8]);
-                setFilteredReservationsOrders(response[8]);
+                if (response===true){
+                    setIdsReservations(response[3]);
+                    setFilteredIdsReservations(response[3]);
+                    setTimesReservations(response[4]);
+                    setFilteredTimesReservations(response[4]);
+                    setNamesReservations(response[5]);
+                    setFilteredNamesReservations(response[5]);
+                    setTablesReservations(response[6]);
+                    setFilteredTablesReservations(response[6]);
+                    setIdsOrders(response[7]);
+                    setFilteredIdsOrders(response[7]);
+                    setReservationsOrders(response[8]);
+                    setFilteredReservationsOrders(response[8]);
+                }
+            
                 setLoading(false);
 
             } catch (error) {

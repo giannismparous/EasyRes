@@ -176,12 +176,22 @@ const Order = () => {
             </html>
         `;
     
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(printContent);
-        printWindow.document.close(); // Close the document stream
-        printWindow.print();
-        printWindow.close();
+        handlePrint(printContent);
+        // const printWindow = window.open('', '_blank');
+        // printWindow.document.write(printContent);
+        // printWindow.document.close(); // Close the document stream
+        // printWindow.print();
+        // printWindow.close();
     };
+
+    function handlePrint(printContent) {
+        console.log(printContent)
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({html: printContent}));
+        } else {
+            console.error('ReactNativeWebView not available');
+        }
+    }
     
     const handleNotesChange = (itemId, notes) => {
         setOrder(prevOrder => ({
