@@ -187,9 +187,16 @@ const Order = () => {
     function handlePrint(printContent) {
         console.log(printContent)
         if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({html: printContent}, {printerIp: printerIp}, {printerPort:printerPort}));
+            const data = {
+                html: printContent,
+                printerIp: printerIp,
+                printerPort: printerPort
+            };
+            window.ReactNativeWebView.postMessage(JSON.stringify(data));
         } else {
             console.error('ReactNativeWebView not available');
+            console.log(printerIp)
+            console.log(printerPort)
         }
     }
     
