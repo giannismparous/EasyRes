@@ -8,7 +8,7 @@ const Order = () => {
 
     const navigate = useNavigate();
 
-    const { collectionKey, selectedDate, reservationId, printerIp, printerPort} = useParams();
+    const { collectionKey, uid, selectedDate, reservationId, printerIp, printerPort} = useParams();
     const [menuMap, setMenuMap] = useState({});
     const [order, setOrder] = useState({});
     const [uniqueCategories, setUniqueCategories] = useState([]);
@@ -112,7 +112,7 @@ const Order = () => {
             console.log("Response:");
             console.log(response);
             printOrderSummary(); // Print order summary after sending order
-            navigate('/reservations/sample-restaurant');
+            navigate(`/reservations/sample-restaurant/${uid}`);
         } catch (error) {
             console.error("Error sending order: ", error);
             // Handle errors, e.g., display an error message to the user

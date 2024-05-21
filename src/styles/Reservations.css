@@ -1442,3 +1442,7 @@
         /* Add any additional styling as needed */
     }
 }
+
+.no-padding-top {
+    padding-top: 0;
+}

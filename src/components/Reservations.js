@@ -28,7 +28,7 @@ const states = [
 
 const Reservations = () => {
 
-    function getCurrentTablesReservations(timezone) {
+    function getCurrentTimeIndex(timezone) {
         // Get the current date and time in the specified timezone
         const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone });
         const currentTime = new Date(currentDate);
@@ -36,8 +36,8 @@ const Reservations = () => {
         const currentMinute = currentTime.getMinutes();
     
         // Format the current time to match the format in timesMap ("HH:MM")
-        // const formattedTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
-        const formattedTime = "17:15"
+        const formattedTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        // const formattedTime = "17:15"
         // Find the appropriate index in timesMap
         let index = 0;
         for (let i = 0; i < Object.values(timesMap).length; i++) {
@@ -47,6 +47,12 @@ const Reservations = () => {
             }
             index = i+1;
         }
+        return index;
+    }
+
+    function getCurrentTablesReservations(timezone) {
+        
+        const index = getCurrentTimeIndex(timezone);
 
         const currentTablesReservations=[];
         
@@ -159,6 +165,8 @@ const Reservations = () => {
     const [showEditOpen, setShowEditOpen] = useState(false);
 
     const [currentTablesReservations, setCurrentTablesReservations] = useState([]);
+    const [currentTimeIndex, setCurrentTimeIndex] = useState();
+
 
     const getInfoFromServer = async (collectionKey) => {
         try {
@@ -204,7 +212,7 @@ const Reservations = () => {
 
             const response2 = await fetchUserInfo(collectionKey,uid);
             
-            console.log("User info esponse:");
+            console.log("User info response:");
             console.log(response2);
             
             setUserInfo(response2);
@@ -404,7 +412,7 @@ const Reservations = () => {
         console.log(response);
 
         toggleAddReservationPopup(!showAddReservationPopup);
-
+        await refreshData();
     };
 
     const addNewMenuItemToServer = async () => {
@@ -413,7 +421,7 @@ const Reservations = () => {
         console.log(response);
 
         toggleAddMenuItemPopup(!showAddReservationPopup);
-
+        await refreshData();
     };
 
     const updateSettingsToServer = async () => {
@@ -445,6 +453,7 @@ const Reservations = () => {
 
         const response = await updateUnavailableDays(collectionKey, mergedUnavailableDays);
         console.log(response);
+        await refreshData();
 
     };
 
@@ -512,7 +521,7 @@ const Reservations = () => {
     
         if (selectedDate)getNewDateInfoFromServer(collectionKey,selectedDate);
         
-    }, [selectedDate]);
+    }, [selectedDate,userInfo]);
 
     useEffect(() => {
         setExpandedTablesReservations(Array(tablesReservations.length).fill(true));
@@ -663,6 +672,9 @@ const Reservations = () => {
 
     const handleSortOptionSelect = (option) => {
         setSelectedSortOption(option);
+        if (option===9){
+            setCurrentTimeIndex(getCurrentTimeIndex(timezone));
+        }
         setSortByMenuOpen(false);
     };
 
@@ -815,9 +827,9 @@ const Reservations = () => {
         setNewIngredientPrice(0);
     };
 
-    const refreshData = () => {
+    const refreshData = async () => {
         // Call the function that fetches data from the server
-        getInfoFromServer(collectionKey);
+        await getInfoFromServer(collectionKey);
     };
 
     return (
@@ -896,7 +908,7 @@ const Reservations = () => {
                     </div>
                 ) : (
                     
-                    !showCalendar && <div className="reservations">
+                    !showCalendar && <div className={`reservations ${selectedSortOption === 9 ? 'no-padding-top' : ''}`}>
                         {mode<=2 && <div className='sort-label'>
                             <h2>{selectedDate}</h2>
                         </div>}
@@ -1099,13 +1111,13 @@ const Reservations = () => {
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
@@ -1167,13 +1179,13 @@ const Reservations = () => {
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
@@ -1235,13 +1247,13 @@ const Reservations = () => {
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
@@ -1298,13 +1310,13 @@ const Reservations = () => {
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                            <Link to={`/order/${collectionKey}/${uid}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
                                                                 <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
@@ -1484,9 +1496,9 @@ const Reservations = () => {
                                 ))}
                             </div>
                         )}
-                        {selectedSortOption ===9 && <div className='map'>
-                            <MapComponent tables={tables} unavailableTables={unavailableTables} currentTablesReservations={currentTablesReservations} setTables={setTables} setUnavailableTables={setUnavailableTables}>
-                            </MapComponent>    
+                        {selectedSortOption === 9 && <div className='map'>
+                            <MapComponent collectionKey= {collectionKey} reservationDate= {selectedDate} getCurrentTimeIndex= {getCurrentTimeIndex} timezone={timezone} reservationDuration={reservationDuration} tables={tables} unavailableTables={unavailableTables} currentTablesReservations={currentTablesReservations} setTables={setTables} setUnavailableTables={setUnavailableTables} refreshData={refreshData}>
+                                </MapComponent>    
                         </div>}
                         {selectedSortOption === 10 && <div className='settings-container'>
                             <div className="settings-header">

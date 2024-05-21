@@ -23,7 +23,7 @@ function App() {
         <Route path="/login/:collectionKey" element={<Login />} />
         <Route path="/reserve/:collectionKey/:mode" element={<Reserve />} />
         <Route path="/reservations/:collectionKey/:uid" element={<Reservations/>} />
-        <Route path="/order/:collectionKey/:selectedDate/:reservationId/:printerIp/:printerPort" element={<Order/>} />
+        <Route path="/order/:collectionKey/:uid/:selectedDate/:reservationId/:printerIp/:printerPort" element={<Order/>} />
         <Route path="/reserve/:collectionKey/:reservationDate/:reservationStartTimeIndex/:reservationEndTimeIndex/:tableNumber" element={<ReserveTable/>} />
         <Route path="/reserve/:collectionKey/vr" element={<SamplePage redirectToSample={false} modelPath="https://giannismparous.github.io/test_vr/"/>} /> 
       </Routes>

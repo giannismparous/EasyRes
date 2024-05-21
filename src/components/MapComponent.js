@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Stage, Layer, Circle, Text } from 'react-konva';
 import '../styles/MapComponent.css'; // Import CSS file
+import { addNewReservation } from './firebase.utils';
 
-const MapComponent = ({ tables, unavailableTables, currentTablesReservations, setTables, setUnavailableTables }) => {
+const MapComponent = ({ collectionKey, reservationDate, getCurrentTimeIndex, timezone, reservationDuration, tables, unavailableTables, currentTablesReservations, setTables, setUnavailableTables, refreshData }) => {
 
   const states = [
     { id: 4, title: "Arrived" },
@@ -153,79 +154,81 @@ const MapComponent = ({ tables, unavailableTables, currentTablesReservations, se
 
  
 
-  const saveReservation = () => {
-    // Save the reservation details to the state or send to backend
-    // Assuming `currentTablesReservations` is updated via props
-    // Add or update reservation logic here
+  const saveReservation = async () => {
+
+    const currentTimeIndex = getCurrentTimeIndex(timezone);
+
+    const response = await addNewReservation(collectionKey, reservationDate, parseInt(currentTimeIndex), parseInt(currentTimeIndex+reservationDuration), parseInt(reservationDetails.table_id), reservationDetails.name, reservationDetails.phone, reservationDetails.email, reservationDetails.notes, parseInt(reservationDetails.people), reservationDetails.smokes,4);
     setShowPopup(false);
+    await refreshData();
+
   };
 
   return (
-    <div>
-      <div className='map'>
-        <Stage width={window.innerWidth} height={window.innerHeight - 100}>
-          <Layer>
-            {updatedTables.map((table, index) => {
-              // Check if the table has any current reservations with state 4 or 5
-              const tableReservations = currentTablesReservations.filter(reservation => reservation.table_id === table.id);
-              const stateReservation = tableReservations.find(reservation => reservation.state === 4 || reservation.state === 5);
-              const stateNumber = stateReservation ? stateReservation.state : null;
-              return (
-                <React.Fragment key={table.id}>
-                  <Circle
-                    x={table.x}
-                    y={table.y}
-                    radius={radius}
-                    fill={
-                      stateNumber === 4 // State number 4 represents "Arrived"
-                        ? 'blue'
-                        : stateNumber === 5 // State number 5 represents "Ordered"
-                        ? 'green'
-                        : stateNumber === 6 // State number 6 represents "Paid"
-                        ? 'orange'
-                        : updatedUnavailableTables.includes(table.id) // Default color if not arrived, ordered or paid
-                        ? 'red'
-                        : 'black'
-                    }
-                    draggable // Make tables draggable
-                    onDragMove={(event) => {
-                      handleMouseMove(event, table);
-                      const { x, y } = event.target.position();
-                      const newTables = [...updatedTables];
-                      newTables[index] = { ...newTables[index], x, y };
-                      setUpdatedTables(newTables);
-                      setTables(newTables); // Update tables in ParentComponent
-                    }}
-                    onDragEnd={(event) => handleDragEnd(index, event)}
-                    onMouseDown={(event) => handleMouseDown(event, table)}
-                    onMouseUp={(event) => handleMouseUp(event, table)}
-                    onMouseMove={(event) => handleMouseMove(event, table)}
-                    onTouchStart={(event) => handleMouseDown(event, table)}
-                    onTouchEnd={(event) => handleMouseUp(event, table)}
-                    onTouchMove={(event) => handleMouseMove(event, table)}
-                    // onDblClick={() => handleTableDoubleClick(table)}
-                    // onDblTap={() => handleTableDoubleClick(table)}
-                  />
+    <div className="map">
+      <Stage width={1920} height={911}>
+        <Layer>
+          {updatedTables.map((table, index) => {
+            // Check if the table has any current reservations with state 4 or 5
+            const tableReservations = currentTablesReservations.filter(reservation => reservation.table_id === table.id);
+            const stateReservation = tableReservations.find(reservation => reservation.state === 4 || reservation.state === 5);
+            const stateNumber = stateReservation ? stateReservation.state : null;
+            console.log(currentTablesReservations)
+            return (
+              <React.Fragment key={table.id}>
+                <Circle
+                  x={table.x}
+                  y={table.y}
+                  radius={radius}
+                  fill={
+                    stateNumber === 4 // State number 4 represents "Arrived"
+                      ? 'blue'
+                      : stateNumber === 5 // State number 5 represents "Ordered"
+                      ? 'green'
+                      : stateNumber === 6 // State number 6 represents "Paid"
+                      ? 'orange'
+                      : updatedUnavailableTables.includes(table.id) // Default color if not arrived, ordered or paid
+                      ? 'red'
+                      : 'black'
+                  }
+                  draggable // Make tables draggable
+                  onDragMove={(event) => {
+                    handleMouseMove(event, table);
+                    const { x, y } = event.target.position();
+                    const newTables = [...updatedTables];
+                    newTables[index] = { ...newTables[index], x, y };
+                    setUpdatedTables(newTables);
+                    setTables(newTables); // Update tables in ParentComponent
+                  }}
+                  onDragEnd={(event) => handleDragEnd(index, event)}
+                  onMouseDown={(event) => handleMouseDown(event, table)}
+                  onMouseUp={(event) => handleMouseUp(event, table)}
+                  onMouseMove={(event) => handleMouseMove(event, table)}
+                  onTouchStart={(event) => handleMouseDown(event, table)}
+                  onTouchEnd={(event) => handleMouseUp(event, table)}
+                  onTouchMove={(event) => handleMouseMove(event, table)}
+                  // onDblClick={() => handleTableDoubleClick(table)}
+                  // onDblTap={() => handleTableDoubleClick(table)}
+                />
+                <Text
+                  x={table.x - 5} // Adjust text position to center
+                  y={table.y - 5}
+                  text={table.id.toString()} // Display table id
+                  fill="white"
+                />
+                {stateNumber && (
                   <Text
-                    x={table.x - 5} // Adjust text position to center
-                    y={table.y - 5}
-                    text={table.id.toString()} // Display table id
-                    fill="white"
+                    x={table.x - 20} // Adjust text position to center
+                    y={table.y + 10}
+                    text={states.find(state => state.id === stateNumber).title} // Display state number
+                    fill="yellow"
                   />
-                  {stateNumber && (
-                    <Text
-                      x={table.x - 20} // Adjust text position to center
-                      y={table.y + 10}
-                      text={states.find(state => state.id === stateNumber).title} // Display state number
-                      fill="yellow"
-                    />
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </Layer>
-        </Stage>
-      </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </Layer>
+      </Stage>
       {showPopup && (
         <div className='map-table-popup-window' onClick={() => setShowPopup(false)}>
           <div className='map-table-popup-window-container' onClick={(e) => e.stopPropagation()}>
@@ -301,15 +304,15 @@ const MapComponent = ({ tables, unavailableTables, currentTablesReservations, se
                     onChange={handleReservationChange}
                   />
                 </label>
-                <label>
+                {/* <label>
                   Reservation ID:
                   <input
-                    type="text"
+                    type="number"
                     name="reservation_id"
                     value={reservationDetails.reservation_id}
                     readOnly
                   />
-                </label>
+                </label> */}
                 <label>
                   Smokes:
                   <input
