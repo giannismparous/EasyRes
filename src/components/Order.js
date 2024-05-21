@@ -8,7 +8,7 @@ const Order = () => {
 
     const navigate = useNavigate();
 
-    const { collectionKey, selectedDate, reservationId} = useParams();
+    const { collectionKey, selectedDate, reservationId, printerIp, printerPort} = useParams();
     const [menuMap, setMenuMap] = useState({});
     const [order, setOrder] = useState({});
     const [uniqueCategories, setUniqueCategories] = useState([]);
@@ -187,7 +187,7 @@ const Order = () => {
     function handlePrint(printContent) {
         console.log(printContent)
         if (window.ReactNativeWebView) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({html: printContent}));
+            window.ReactNativeWebView.postMessage(JSON.stringify({html: printContent}, {printerIp: printerIp}, {printerPort:printerPort}));
         } else {
             console.error('ReactNativeWebView not available');
         }
