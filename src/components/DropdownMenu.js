@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/DropdownMenu.css';
 
-const ordersOpenImg = '../icons/orders-blue-open.png';
-const ordersClosedImg = '../icons/orders-blue.png';
-const reservationsOpenImg = '../icons/reservation-open-blue.png';
-const reservationsClosedImg = '../icons/reservation-blue.png';
-const tablesOpenImg = '../icons/tables-blue-open.png';
-const tablesClosedImg = '../icons/tables-blue.png';
-const dotsClosedImg = '../icons/dots-blue.png';
-const dotsOpenImg = '../icons/dots-open.png'; 
-const menuOpenImg = '../icons/menu-open.png';
-const menuClosedImg = '../icons/menu-closed.png';
-const floorplanOpenImg = '../icons/floorplan-open.png';
-const floorplanClosedImg = '../icons/floorplan-closed.png';
-const settingsOpenImg = '../icons/settings-open.png';
-const settingsClosedImg = '../icons/settings-closed.png';
+const ordersOpenImg = '../../icons/orders-blue-open.png';
+const ordersClosedImg = '../../icons/orders-blue.png';
+const reservationsOpenImg = '../../icons/reservation-open-blue.png';
+const reservationsClosedImg = '../../icons/reservation-blue.png';
+const tablesOpenImg = '../../icons/tables-blue-open.png';
+const tablesClosedImg = '../../icons/tables-blue.png';
+const dotsClosedImg = '../../icons/dots-blue.png';
+const dotsOpenImg = '../../icons/dots-open.png'; 
+const menuOpenImg = '../../icons/menu-open.png';
+const menuClosedImg = '../../icons/menu-closed.png';
+const floorplanOpenImg = '../../icons/floorplan-open.png';
+const floorplanClosedImg = '../../icons/floorplan-closed.png';
+const settingsOpenImg = '../../icons/settings-open.png';
+const settingsClosedImg = '../../icons/settings-closed.png';
 
 function DropdownMenu({ changeMode, currentMode}) {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,6 +1,8 @@
 .dropdown {
-  position: fixed; /* Position the dropdown menu relative to the viewport */
-  z-index: 500; /* Ensure that the dropdown menu appears above other elements */
+  position: fixed;
+  /* Position the dropdown menu relative to the viewport */
+  z-index: 500;
+  /* Ensure that the dropdown menu appears above other elements */
   display: flex;
   flex-direction: column;
   width: auto;
@@ -14,109 +16,122 @@
   border: none;
   box-shadow: none;
   background-color: transparent;
-  transition: none; /* Disable transitions for closing */
+  transition: none;
+  /* Disable transitions for closing */
 }
 
 .dropdown.open {
-  border-radius: 999px; /* Rounded corners */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Box shadow */
+  border-radius: 999px;
+  /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  /* Box shadow */
   background-color: white;
-  transition: border-radius 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Enable transitions for opening */
+  transition: border-radius 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  /* Enable transitions for opening */
 }
 
 .dropdown button {
   background-color: transparent;
   color: black;
-  border: none; /* Remove button border */
-  margin: 0; /* Remove default button margins */
-  padding-left: 12px; /* Add some padding for button content */
+  border: none;
+  /* Remove button border */
+  margin: 0;
+  /* Remove default button margins */
 }
 
-.dropdown.open .reservations-button.active, .dropdown.open .orders-button.active, .dropdown.open .tables-button.active, .dropdown.open .menu-button.active, .dropdown.open .floorplan-button.active, .dropdown.open .settings-button.active, .dropdown.open .dots-button.active {
-  background-color: #007bff; /* Set border color to blue when active */
+.dropdown.open .reservations-button.active,
+.dropdown.open .orders-button.active,
+.dropdown.open .tables-button.active,
+.dropdown.open .menu-button.active,
+.dropdown.open .floorplan-button.active,
+.dropdown.open .settings-button.active,
+.dropdown.open .dots-button.active {
+  background-color: #007bff;
+  /* Set border color to blue when active */
   border-radius: 9999px;
 }
 
 .dots-button {
-background-color: transparent; /* Set the background color to transparent */
-border: none;
-width: auto;
+  background-color: transparent;
+  /* Set the background color to transparent */
+  border: none;
+  width: auto;
 }
 
-.dots-button:hover{
-background-color: transparent;
+.dots-button:hover {
+  background-color: transparent;
 }
 
 .dots-button img {
-width: 43px ;
-height: 45px;
-margin: 0;
+  width: 43px;
+  height: 45px;
+  margin: 0;
 }
 
 .reservations-button {
-background-color: transparent;
-border: none;
-width: auto;
-width: auto;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  width: auto;
 }
 
-.reservations-button:hover{
-background-color: transparent;
+.reservations-button:hover {
+  background-color: transparent;
 }
 
 .reservations-button img {
-width: 40px ;
-height: 45px;
-margin: 0;
+  width: 40px;
+  height: 45px;
+  margin: 0;
 }
 
 .orders-button {
-background-color: transparent; 
-border: none;
-width: auto;
+  background-color: transparent;
+  border: none;
+  width: auto;
 }
 
-.orders-button:hover{
-background-color: transparent;
+.orders-button:hover {
+  background-color: transparent;
 }
 
 .orders-button img {
-width: 40px;
-margin: 0;
+  width: 40px;
+  margin: 0;
 }
 
 .tables-button {
-background-color: transparent;
-border: none;
-width: auto;
-width: auto;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  width: auto;
 }
 
-.tables-button:hover{
-background-color: transparent;
+.tables-button:hover {
+  background-color: transparent;
 }
 
 .tables-button img {
-width: 40px ;
-height: 40px;
-margin: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0;
 }
 
 .menu-button {
-background-color: transparent;
-border: none;
-width: auto;
-width: auto;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  width: auto;
 }
 
-.menu-button:hover{
-background-color: transparent;
+.menu-button:hover {
+  background-color: transparent;
 }
 
 .menu-button img {
-width: 40px ;
-height: 40px;
-margin: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0;
 }
 
 .floorplan-button {
@@ -125,30 +140,38 @@ margin: 0;
   width: auto;
   width: auto;
 }
-  
-.floorplan-button:hover{
+
+.floorplan-button:hover {
   background-color: transparent;
 }
 
 .floorplan-button img {
-  width: 40px ;
+  width: 40px;
   height: 40px;
   margin: 0;
 }
 
 .settings-button {
-background-color: transparent;
-border: none;
-width: auto;
-width: auto;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  width: auto;
 }
 
-.settings-button:hover{
-background-color: transparent;
+.settings-button:hover {
+  background-color: transparent;
 }
 
 .settings-button img {
-width: 40px ;
-height: 40px;
-margin: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+}
+
+@media screen and (max-width: 575px) {
+  .dropdown {
+    right: 4px;
+    top: 15px;
+  }
+
 }

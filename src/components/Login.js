@@ -12,8 +12,8 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const successfulLogin= await attemptLogin(username, password);
-      if (successfulLogin){
-        navigate("/reservations/sample-restaurant");
+      if (successfulLogin!== false && successfulLogin!==undefined && successfulLogin!==null){
+        navigate("/reservations/sample-restaurant/"+successfulLogin);
       }
       // If login is successful, you might want to redirect the user to another page or update UI accordingly
       

@@ -769,6 +769,31 @@ export const dateExists = async (collectionKey, date) => {
   
 };
 
+export const fetchUserInfo = async (collectionKey, uid) => {
+  try {
+    const sampleRestaurantRef = collection(db, collectionKey);
+    const infoRef = doc(sampleRestaurantRef, "users");
+    const infoDoc = await getDoc(infoRef);
+    if (infoDoc.exists()) {
+      const users = infoDoc.data().users;
+      const user = users.find(user => user.uid === uid);
+
+      if (user) {
+        return user;
+      } else {
+        console.log(`User with UID ${uid} not found.`);
+        return null;
+      }
+    } else {
+      console.log(`Document does not exist.`);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    return null;
+  }
+};
+
 export const fetchInfo = async (collectionKey) => {
 
   const sampleRestaurantRef = collection(db, collectionKey);
@@ -1522,8 +1547,12 @@ export const completeReservationByTableNumber = async (collectionKey, reservatio
 export const attemptLogin = async (username,password) => {
   try {
     await signInWithEmailAndPassword(auth,username, password);
+
+    const uid = auth.currentUser.uid;
+    
     console.log('Logged in successfully!');
-    return true;
+    return uid;
+
   } catch (error) {
     console.error('Error logging in:', error.message);
     return false;

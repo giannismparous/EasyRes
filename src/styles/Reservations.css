@@ -28,7 +28,7 @@
 .reservations {
     display: flex;
     flex-wrap: wrap;
-    padding-top:100px;
+    padding-top: 100px;
     gap: 10px;
 }
 
@@ -36,12 +36,14 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    margin: 10px 0; /* Adjust margin to create space between reservations */
-    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    margin: 10px 0;
+    /* Adjust margin to create space between reservations */
+    width: 100%;
+    /* Set width to 100% to make each reservation take up full width */
     background-color: white;
 }
 
-.reservation button{
+.reservation button {
     background-color: #007bff;
 }
 
@@ -52,11 +54,13 @@
 
 .reservation {
     border: none;
-    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    width: 100%;
+    /* Set width to 100% to make each reservation take up full width */
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
+    padding: 15px 15px;
 }
 
 .reservations-container {
@@ -64,39 +68,40 @@
 }
 
 .reservation-details-container {
-    display: flex; /* Use flexbox */
+    display: flex;
+    /* Use flexbox */
     flex-direction: row;
     gap: 10px;
     width: auto;
     align-items: center;
     justify-content: center;
-    padding: 15px 10px;
-    flex-wrap: wrap; 
+    padding: 15px 0px;
+    flex-wrap: wrap;
 }
 
 .reservation-details {
     border: 0px solid #ccc;
     padding: 10px 0;
-    background-color: #d0d0d0;  
+    background-color: #d0d0d0;
     width: 600px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border-radius: 15px;
-    
+
 }
 
 .state-img {
     height: 120px;
     width: auto;
     margin: 0;
-}    
+}
 
 .reservation-customer-info {
     padding-left: 10px;
 }
 
-.reservation-customer-info p{
+.reservation-customer-info p {
     margin: 10px;
     font-size: 20px;
 }
@@ -159,9 +164,10 @@
 
     .reservation {
         border: none;
-        width: 100%; /* Set width to 100% to make each reservation take up full width */
-        margin: 0;
-        padding: 0;
+        width: 100%;
+        /* Set width to 100% to make each reservation take up full width */
+        margin: 0 0;
+        padding: 0 20px;
     }
 
     .reservations-container {
@@ -169,7 +175,8 @@
     }
 
     .reservation-details-container {
-        display: flex; /* Use flexbox */
+        display: flex;
+        /* Use flexbox */
         flex-direction: column;
         gap: 5px;
         width: 100%;
@@ -180,7 +187,7 @@
     .reservation-details {
         border: 0px solid #ccc;
         margin: 0;
-        background-color: #d0d0d0;  
+        background-color: #d0d0d0;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -191,13 +198,13 @@
         height: 70px;
         width: auto;
         margin: 0;
-    }    
+    }
 
     .reservation-customer-info {
         padding-left: 10px;
     }
 
-    .reservation-customer-info p{
+    .reservation-customer-info p {
         margin: 10px;
         font-size: 16px;
     }
@@ -254,49 +261,54 @@
         justify-content: center;
         gap: 2px;
     }
-   
+
 }
 
-.reservation-details ul li{
+.reservation-details ul li {
     /* list-style-type: circle; */
 }
 
-.reservation-details ul li{
-    color: rgb(0,9,128);
+.reservation-details ul li {
+    color: rgb(0, 9, 128);
 }
 
 
 .search-bar-container {
     display: flex;
     justify-content: center;
-    width: 100%; /* Take up full width of the screen */
+    width: 100%;
+    /* Take up full width of the screen */
     position: fixed;
     z-index: 100;
     margin-top: 20px;
 }
 
-.reservations-container h2{
+.reservations-container h2 {
     color: black;
 }
 
-.reservations-container h2::after{
+.reservations-container h2::after {
     background-color: black;
 }
 
 .toggle-button {
     width: auto;
-    width: 30px; /* Set width and height to the same value for a round button */
-    height: 30px; /* Same value as width to make it round */
+    width: 30px;
+    /* Set width and height to the same value for a round button */
+    height: 30px;
+    /* Same value as width to make it round */
     margin-left: 10px;
     border-radius: 50%;
 }
 
 .search-bar {
-    position: relative; /* Set position to relative */
+    position: relative;
+    /* Set position to relative */
     display: flex;
-    align-items: center; /* Align items vertically */
+    align-items: center;
+    /* Align items vertically */
     justify-content: center;
-    width: calc(50% );
+    width: calc(50%);
     margin-bottom: 20px;
 }
 
@@ -304,7 +316,8 @@
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+    border-radius: 20px;
+    /* Adjust border-radius to make corners more rounded */
     font-size: 16px;
 }
 
@@ -321,28 +334,39 @@
 
 .clear-button:hover,
 .sort-button:hover {
-    color: #007bff; /* Change this to your desired color */
+    color: #007bff;
+    /* Change this to your desired color */
     background-color: transparent;
 }
 
 .clear-button {
-    position: absolute; /* Set position to absolute */
-    top: 50%; /* Position the button vertically at the center */
-    right: 30px; /* Position the clear button on the right side with some space */
-    transform: translateY(-50%); /* Adjust vertical position */
+    position: absolute;
+    /* Set position to absolute */
+    top: 50%;
+    /* Position the button vertically at the center */
+    right: 30px;
+    /* Position the clear button on the right side with some space */
+    transform: translateY(-50%);
+    /* Adjust vertical position */
 }
 
 .sort-button {
-    position: absolute; /* Set position to absolute */
-    top: 50%; /* Position the button vertically at the center */
-    right: 0px; /* Position the clear button on the right side with some space */
-    transform: translateY(-50%); /* Adjust vertical position */
-    margin-left: 10px; /* Add margin between clear button and sort button */
+    position: absolute;
+    /* Set position to absolute */
+    top: 50%;
+    /* Position the button vertically at the center */
+    right: 0px;
+    /* Position the clear button on the right side with some space */
+    transform: translateY(-50%);
+    /* Adjust vertical position */
+    margin-left: 10px;
+    /* Add margin between clear button and sort button */
     width: auto;
 }
 
 .sort-button:hover {
-    background-color: transparent; /* Change background color to transparent on hover */
+    background-color: transparent;
+    /* Change background color to transparent on hover */
 }
 
 .sort-button img {
@@ -351,24 +375,35 @@
 }
 
 .sort-menu {
-    position: absolute; /* Set position to absolute */
-    top: calc(100% + 5px); /* Position the menu below the sort button with a small gap */
-    right: 0; /* Align the menu with the right edge of the sort button */
-    background-color: #fff; /* Set background color */
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 5px; /* Add border radius */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
-    z-index: 1; /* Ensure the menu is above other content */
+    position: absolute;
+    /* Set position to absolute */
+    top: calc(100% + 5px);
+    /* Position the menu below the sort button with a small gap */
+    right: 0;
+    /* Align the menu with the right edge of the sort button */
+    background-color: #fff;
+    /* Set background color */
+    border: 1px solid #ccc;
+    /* Add a border */
+    border-radius: 5px;
+    /* Add border radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add box shadow for depth */
+    z-index: 1;
+    /* Ensure the menu is above other content */
 }
 
 /* Add styles for the sort options */
 .sort-option {
-    padding: 10px; /* Add padding */
-    cursor: pointer; /* Change cursor to pointer on hover */
+    padding: 10px;
+    /* Add padding */
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
 }
 
 .sort-option:hover {
-    background-color: #f0f0f0; /* Change background color on hover */
+    background-color: #f0f0f0;
+    /* Change background color on hover */
 }
 
 
@@ -451,75 +486,80 @@
     background: linear-gradient(to top left, #007bff, rgb(0, 6, 80));
     z-index: 1000;
     opacity: 0;
-    pointer-events: none; /* Add this to prevent clicks on the overlay when it's not visible */
-    transition: opacity 0.5s ease-out; /* Add a transition for a smooth fade effect */
-  }
-  
+    pointer-events: none;
+    /* Add this to prevent clicks on the overlay when it's not visible */
+    transition: opacity 0.5s ease-out;
+    /* Add a transition for a smooth fade effect */
+}
+
 .calendar-overlay.visible {
     opacity: 1;
 }
 
 .calendar-button {
-background-color: transparent; /* Set the background color to transparent */
-border: none;
-z-index: 2000;
-position: fixed;
-width: auto;
-padding: 0;
-margin-top: 0px;
-/* Add any additional styling as needed */
+    background-color: transparent;
+    /* Set the background color to transparent */
+    border: none;
+    z-index: 2000;
+    position: fixed;
+    width: auto;
+    padding: 0;
+    margin-top: 0px;
+    /* Add any additional styling as needed */
 }
 
 .edit-button {
-    background-color: transparent; /* Set the background color to transparent */
+    background-color: transparent;
+    /* Set the background color to transparent */
     border: none;
     z-index: 2000;
     position: fixed;
     width: auto;
     padding: 0;
     margin-top: 18px;
-    margin-left: 90px;
+    right: 0;
     /* Add any additional styling as needed */
 }
 
 .save-button {
-    background-color: transparent; /* Set the background color to transparent */
+    background-color: transparent;
+    /* Set the background color to transparent */
     border: none;
     z-index: 2000;
     position: fixed;
     width: auto;
     padding: 0;
+    right: 48px;
     margin-top: 15px;
-    margin-left: 150px;
     /* Add any additional styling as needed */
 }
 
-.calendar-button:hover{
+.calendar-button:hover {
     background-color: transparent;
 }
 
-.edit-button:hover{
+.edit-button:hover {
     background-color: transparent;
 }
 
-.save-button:hover{
+.save-button:hover {
     background-color: transparent;
 }
 
 .calendar-button img {
-width: 80px ;
-margin: 0;
-/* Add any additional styling as needed */
+    width: 80px;
+    margin: 0;
+    /* Add any additional styling as needed */
 }
 
 .edit-button img {
-    width: 45px ;
+    width: 45px;
     margin: 0;
     /* Add any additional styling as needed */
 }
 
 .save-button img {
-    width: 50px ;
+    width: 50px;
     margin: 0;
     /* Add any additional styling as needed */
 }
@@ -534,18 +574,20 @@ margin: 0;
 
 @media screen and (max-width: 700px) {
 
-    
+
     .search-bar {
-        position: fixed; /* Set position to relative */
+        position: fixed;
+        /* Set position to relative */
         display: flex;
         margin-bottom: 20px;
     }
-    
+
     .search-input {
         flex: 1;
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        border-radius: 20px;
+        /* Adjust border-radius to make corners more rounded */
         font-size: 12px;
         width: calc(70%);
     }
@@ -554,12 +596,13 @@ margin: 0;
 @media screen and (max-width: 575px) {
 
     .calendar-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         z-index: 2000;
         position: fixed;
         left: 5px;
-        margin-top: 10px;
+        margin-top: 5px;
         /* Add any additional styling as needed */
     }
 
@@ -568,7 +611,8 @@ margin: 0;
     }
 
     .dots-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -579,7 +623,8 @@ margin: 0;
     }
 
     .reservations-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -590,7 +635,8 @@ margin: 0;
     }
 
     .orders-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -599,28 +645,38 @@ margin: 0;
         width: 60px;
     }
 
-    
+
     .search-bar {
         margin-bottom: 20px;
     }
-    
+
     .search-input {
         flex: 1;
         padding: 10px;
         border: 1px solid #ccc;
-        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        border-radius: 20px;
+        /* Adjust border-radius to make corners more rounded */
         font-size: 12px;
+    }
+
+    .edit-button img {
+        width: 38px;
+    }
+
+    .save-button img {
+        width: 42px;
     }
 }
 
 @media screen and (max-width: 450px) {
 
     .calendar-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         z-index: 2000;
         position: fixed;
-        margin-top: 15px;
+        margin-top: 7px;
         /* Add any additional styling as needed */
     }
 
@@ -629,7 +685,8 @@ margin: 0;
     }
 
     .dots-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -640,7 +697,8 @@ margin: 0;
     }
 
     .reservations-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -651,7 +709,8 @@ margin: 0;
     }
 
     .orders-button {
-        background-color: transparent; /* Set the background color to transparent */
+        background-color: transparent;
+        /* Set the background color to transparent */
         border: none;
         /* Add any additional styling as needed */
     }
@@ -660,15 +719,29 @@ margin: 0;
         width: 27px;
     }
 
-    
-    
+
+
     .search-input {
         flex: 1;
         padding: 120px;
         border: 1px solid #ccc;
-        border-radius: 20px; /* Adjust border-radius to make corners more rounded */
+        border-radius: 20px;
+        /* Adjust border-radius to make corners more rounded */
         font-size: 12px;
     }
+
+    .edit-button img {
+        width: 28px;
+    }
+
+    .save-button img {
+        width: 32px;
+    }
+
+    .save-button {
+        right: 35px;
+    }
+
 }
 
 .table-header {
@@ -681,7 +754,8 @@ margin: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -691,9 +765,12 @@ margin: 0;
 .state-popup-window-items {
     background-color: #007bff;
     position: relative;
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(4, 1fr); /* 4 columns with equal width */
-    gap: 20px; /* Gap between grid items */
+    display: grid;
+    /* Use grid layout */
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 columns with equal width */
+    gap: 20px;
+    /* Gap between grid items */
     justify-content: center;
     align-items: center;
     width: 80%;
@@ -703,15 +780,16 @@ margin: 0;
 }
 
 .state-popup-window-item {
-   display: flex;
-   flex-direction: column;
-   height: auto;
-   align-items: center;
-   justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .hidden {
-    opacity: 0.5; /* Make the element partially transparent */
+    opacity: 0.5;
+    /* Make the element partially transparent */
 }
 
 .order-items {
@@ -731,20 +809,21 @@ margin: 0;
 }
 
 .order-details-container {
-    display: flex; /* Use flexbox */
+    display: flex;
+    /* Use flexbox */
     flex-direction: row;
     gap: 10px;
     width: auto;
     align-items: center;
     justify-content: center;
     padding: 15px 10px;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .order-details {
     border: 0px solid #ccc;
     padding: 10px 0;
-    background-color: #d0d0d0;  
+    background-color: #d0d0d0;
     width: 600px;
     display: flex;
     flex-direction: row;
@@ -753,11 +832,11 @@ margin: 0;
     padding: 15px 10px;
 }
 
-.order-details li{
+.order-details li {
     color: black;
 }
 
-.order-details p{
+.order-details p {
     height: auto;
     display: flex;
     flex-direction: column;
@@ -766,8 +845,8 @@ margin: 0;
     color: rgb(0, 9, 128);
 }
 
-.order-details img{
-   margin: 0;
+.order-details img {
+    margin: 0;
 }
 
 .order-table-number {
@@ -783,11 +862,11 @@ margin: 0;
 
 .table {
     border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0; /* Adjust margin to create space between reservations */
-    width: 100%; /* Set width to 100% to make each reservation take up full width */
+    /* Adjust margin to create space between reservations */
+    width: 100%;
+    /* Set width to 100% to make each reservation take up full width */
     background-color: white;
-    
+
 }
 
 .table-items {
@@ -796,20 +875,21 @@ margin: 0;
 }
 
 .table-details-container {
-    display: flex; /* Use flexbox */
+    display: flex;
+    /* Use flexbox */
     flex-direction: row;
     gap: 10px;
     width: auto;
     align-items: center;
     justify-content: center;
     padding: 15px 10px;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .table-details {
     border: 0px solid #ccc;
     padding: 10px 0;
-    background-color: #d0d0d0;  
+    background-color: #d0d0d0;
     width: 500px;
     display: flex;
     flex-direction: column;
@@ -820,10 +900,14 @@ margin: 0;
 }
 
 .add-table-button {
-    width: 50px; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 50%; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: 50px;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 50%;
+    /* Makes the button round */
+    background-color: #007bff;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
@@ -839,7 +923,8 @@ margin: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -849,7 +934,8 @@ margin: 0;
 .table-popup-window-container {
     position: fixed;
     width: 600px;
-    background-color: white; /* Semi-transparent black background */
+    background-color: white;
+    /* Semi-transparent black background */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -870,10 +956,14 @@ margin: 0;
 }
 
 .popup-add-table-button {
-    width: auto; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 30px; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: auto;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 30px;
+    /* Makes the button round */
+    background-color: #007bff;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
@@ -887,20 +977,24 @@ margin: 0;
     width: auto;
     margin-left: 10px;
     margin-right: 0;
-}    
+}
 
 .unavailable-img {
     height: 40px;
     width: auto;
     margin-left: 10px;
     margin-right: 0;
-}    
+}
 
 .add-reservation-button {
-    width: 50px; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 50%; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: 50px;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 50%;
+    /* Makes the button round */
+    background-color: #007bff;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
@@ -916,7 +1010,8 @@ margin: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -926,7 +1021,8 @@ margin: 0;
 .reservation-popup-window-container {
     position: fixed;
     width: 600px;
-    background-color: white; /* Semi-transparent black background */
+    background-color: white;
+    /* Semi-transparent black background */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -935,7 +1031,7 @@ margin: 0;
     padding: 50px 0;
 }
 
-.reservation-popup-window-container input{
+.reservation-popup-window-container input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -956,20 +1052,20 @@ margin: 0;
     width: 100px;
 }
 
-.reservation-popup-window-container h2::after{
+.reservation-popup-window-container h2::after {
     background-color: #000980;
 }
 
-.reservation-popup-window-container label{
+.reservation-popup-window-container label {
     margin: 1em 0;
     color: #000980;
 }
 
-.table-popup-window-container h2::after{
+.table-popup-window-container h2::after {
     background-color: #000980;
 }
 
-.table-popup-window-container label{
+.table-popup-window-container label {
     margin: 1em 0;
     color: #000980;
 }
@@ -989,7 +1085,7 @@ margin: 0;
     width: 100%;
 }
 
-.menu-container p{
+.menu-container p {
     font-size: 25px;
     color: rgb(0, 9, 128);
 }
@@ -1003,10 +1099,14 @@ margin: 0;
 }
 
 .add-menu-item-button {
-    width: 50px; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 50%; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: 50px;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 50%;
+    /* Makes the button round */
+    background-color: #007bff;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
@@ -1022,7 +1122,8 @@ margin: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
     justify-content: center;
     align-items: center;
     display: flex;
@@ -1032,7 +1133,8 @@ margin: 0;
 .menu-item-popup-window-container {
     position: fixed;
     width: 600px;
-    background-color: white; /* Semi-transparent black background */
+    background-color: white;
+    /* Semi-transparent black background */
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -1051,14 +1153,18 @@ margin: 0;
 }
 
 .popup-add-menu-item-button {
-    width: auto; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 30px; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: auto;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 30px;
+    /* Makes the button round */
+    background-color: #007bff;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
-.menu-item-popup-window-container input{
+.menu-item-popup-window-container input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -1067,9 +1173,13 @@ margin: 0;
     font-size: 40px;
 }
 
-.menu-category-section{
+.menu-category-section {
     text-align: center;
     width: 100%;
+}
+
+.menu-category-section ul {
+    padding: 0 20px;
 }
 
 .menu-category-section h2 {
@@ -1084,25 +1194,32 @@ margin: 0;
     gap: 10px;
     align-items: center;
     justify-content: center;
+    padding: 0 20px;
 }
 
-.settings-container input{
+.settings-container input {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 200px;
 }
 
 .save-settings-button {
-    width: auto; /* Adjust width as needed */
-    height: 50px; /* Adjust height as needed */
-    border-radius: 30px; /* Makes the button round */
-    background-color: #007bff; /* Add your desired background color */
+    width: auto;
+    /* Adjust width as needed */
+    height: 50px;
+    /* Adjust height as needed */
+    border-radius: 30px;
+    /* Makes the button round */
+    background-color: #007bff;
+    margin-top: 10px;
+    /* Add your desired background color */
     /* Add any other styles you need */
 }
 
 .settings-fields {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .reservations-container .toggle-ingredients-button {
@@ -1117,12 +1234,17 @@ margin: 0;
     grid-template-columns: 0.001fr 1fr 1fr 1fr;
 }
 
-.menu-item-ingredients p{
+.menu-item-ingredients {
+    width: 100%;
+}
+
+.menu-item-ingredients p {
     margin-top: 0px;
 }
 
 .menu-item-ingredients ul {
-    list-style-type: disc; /* Use disc bullets */
+    list-style-type: disc;
+    /* Use disc bullets */
 }
 
 .menu-item-ingredients ul li {
@@ -1130,45 +1252,40 @@ margin: 0;
     margin-bottom: 15px;
 }
 
-.menu-item-ingredients button{
-    width: 30px;
-    background-color: green;
-    border-radius: 100px;
-}
-
 .ingredient-information {
     width: 100%;
     display: grid;
-    grid-template-columns:  1fr 1fr ;
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 0px;
 }
 
 .new-ingredient-information {
     width: 100%;
     display: grid;
-    grid-template-columns:  1fr 1fr 0.1fr;
+    grid-template-columns: 1fr 1fr 0.1fr;
     grid-column-gap: 20px;
 }
 
 .save-blue-button {
-    background-color: transparent; /* Set the background color to transparent */
+    background-color: transparent;
+    /* Set the background color to transparent */
     border: none;
     z-index: 2000;
     position: fixed;
     width: auto;
     padding: 0;
-    margin-top: 15px;
-    margin-left: 100px;
+    margin-top: 13px;
+    margin-left: 80px;
     /* Add any additional styling as needed */
 }
 
 .save-blue-button img {
-    width: 50px ;
+    width: 56px;
     margin: 0;
     /* Add any additional styling as needed */
 }
 
-.save-blue-button:hover{
+.save-blue-button:hover {
     background-color: transparent;
 }
 
@@ -1181,7 +1298,8 @@ margin: 0;
 }
 
 .refresh-button {
-    background-color: transparent; /* Set the background color to transparent */
+    background-color: transparent;
+    /* Set the background color to transparent */
     border: none;
     z-index: 2000;
     position: fixed;
@@ -1193,12 +1311,134 @@ margin: 0;
     /* Add any additional styling as needed */
 }
 
+
+
 .refresh-button:hover {
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 .refresh-button img {
-    width: 40px ;
+    width: 40px;
     margin: 0;
     /* Add any additional styling as needed */
+}
+
+@media screen and (max-width: 575px) {
+
+    .refresh-button {
+        margin-top: 15px;
+        /* Add any additional styling as needed */
+    }
+
+    .refresh-button img {
+        width: 30px;
+        margin: 0;
+        /* Add any additional styling as needed */
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .search-bar {
+        width: 40%;
+        right: 105px;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .search-bar {
+        width: 30%;
+        left: 110px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .order-details {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .order-details ul {
+        margin-left: 20%;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .menu-item-information p {
+        font-size: 20px;
+    }
+
+    .menu-header h2 {
+        font-size: 35px;
+    }
+
+    .menu-category-section h2 {
+        font-size: 30px;
+    }
+
+    .menu-item-ingredients p {
+        font-size: 20px;
+    }
+
+    .menu-item-ingredients ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu-item-ingredients ul li {
+        font-size: 20px;
+    }
+
+    .menu-item-ingredients button {
+        width: 30px;
+        height: 30px;
+        background-color: green;
+        border-radius: 50px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 515px) {
+
+    .ingredient-information {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .new-ingredient-information {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+}
+
+
+@media screen and (max-width: 575px) {
+    .save-blue-button img {
+        width: 45px;
+    }
+
+    .save-blue-button {
+        margin-top: 13px;
+        margin-left: 70px;
+        /* Add any additional styling as needed */
+    }
+
+    .refresh-button {
+        margin-right: 43px;
+        /* Add any additional styling as needed */
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .save-blue-button img {
+        width: 37px;
+    }
+
+    .save-blue-button {
+        margin-top: 13px;
+        margin-left: 56px;
+        /* Add any additional styling as needed */
+    }
 }

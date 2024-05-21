@@ -3,6 +3,7 @@ import { addCollectionAndDocuments, addDocumentToDatabase, cancelReservationByTa
 import infoDoc from "./dbData";
 import configurationDoc from "./dbConfiguration";
 import dateDoc from "./dbDate";
+import usersDoc from "./dbUsers";
 
 function Debug() {
 
@@ -181,7 +182,7 @@ function Debug() {
     return (
         <div>
             <button onClick={() => addDocumentToDb("sample-restaurant", "info", infoDoc)}>Update Info Document</button>
-            <button onClick={() => addDocumentToDb("sample-restaurant", "configuration", configurationDoc)}>Update Configuration Document</button>
+            <button onClick={() => addDocumentToDb("sample-restaurant", "users", usersDoc)}>Update Users Document</button>
             <button onClick={() => addDocumentToDb("sample-restaurant", getCurrentDate(), dateDoc)}>Add today's document</button>
             <button onClick={() => checkMenu("sample-restaurant")}>Debug menu</button>
             <button onClick={() => checkOrderIdCounter("sample-restaurant")}>Debug order id counter</button>

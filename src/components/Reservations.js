@@ -1,32 +1,72 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/Reservations.css';
-import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, updateMenu, updateReservation, updateRestaurantInfo, updateTablesMap, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
+import { addNewMenuItem, addNewReservation, addNewTable, cancelReservationByTableNumber, completeReservationByTableNumber, dateExists, fetchDateInfo, fetchInfo, fetchUserInfo, updateMenu, updateReservation, updateRestaurantInfo, updateTablesMap, updateUnavailableDays, updateUnavailableTables} from './firebase.utils';
 import { ClockLoader } from 'react-spinners';
 import CalendarYearly from './CalendarYearly';
 import { Link, useParams } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu'
 import MapComponent from './MapComponent';
 
-const sortByImg = '../icons/sort_by.png';
-const calendarOpenImg = '../icons/calendar-open-blue.png';
-const calendarClosedImg = '../icons/calendar-closed-blue.png';
-const editOpenImg = '../icons/edit-open.png';
-const editClosedImg = '../icons/edit.png';
-const saveImg = '../icons/save.png';
-const saveBlueImg = '../icons/save-blue.png';
-const refreshImg = '../icons/refresh.png';
+const sortByImg = '../../icons/sort_by.png';
+const calendarOpenImg = '../../icons/calendar-open-blue.png';
+const calendarClosedImg = '../../icons/calendar-closed-blue.png';
+const editOpenImg = '../../icons/edit-open.png';
+const editClosedImg = '../../icons/edit.png';
+const saveImg = '../../icons/save.png';
+const saveBlueImg = '../../icons/save-blue.png';
+const refreshImg = '../../icons/refresh.png';
 
 const states = [
-    { id: 1, imgSrc: "../icons/late_state.png", title: "Late" },
-    { id: 2, imgSrc: "../icons/waitlist_state.png", title: "Waitlist" },
-    { id: 3, imgSrc: "../icons/pending_state.png", title: "Pending" },
-    { id: 4, imgSrc: "../icons/arrived_state.png", title: "Arrived" },
-    { id: 5, imgSrc: "../icons/ordered_state.png", title: "Ordered" },
-    { id: 6, imgSrc: "../icons/paid_state.png", title: "Paid" },
-    { id: 7, imgSrc: "../icons/canceled_state.png", title: "Canceled" },
+    { id: 1, imgSrc: "../../icons/late_state.png", title: "Late" },
+    { id: 2, imgSrc: "../../icons/waitlist_state.png", title: "Waitlist" },
+    { id: 3, imgSrc: "../../icons/pending_state.png", title: "Pending" },
+    { id: 4, imgSrc: "../../icons/arrived_state.png", title: "Arrived" },
+    { id: 5, imgSrc: "../../icons/ordered_state.png", title: "Ordered" },
+    { id: 6, imgSrc: "../../icons/paid_state.png", title: "Paid" },
+    { id: 7, imgSrc: "../../icons/canceled_state.png", title: "Canceled" },
   ];
 
 const Reservations = () => {
+
+    function getCurrentTablesReservations(timezone) {
+        // Get the current date and time in the specified timezone
+        const currentDate = new Date().toLocaleString("en-US", { timeZone: timezone });
+        const currentTime = new Date(currentDate);
+        const currentHour = currentTime.getHours();
+        const currentMinute = currentTime.getMinutes();
+    
+        // Format the current time to match the format in timesMap ("HH:MM")
+        // const formattedTime = `${String(currentHour).padStart(2, '0')}:${String(currentMinute).padStart(2, '0')}`;
+        const formattedTime = "17:15"
+        // Find the appropriate index in timesMap
+        let index = 0;
+        for (let i = 0; i < Object.values(timesMap).length; i++) {
+            const time = Object.values(timesMap)[i];
+            if (formattedTime < time) {
+                break;
+            }
+            index = i+1;
+        }
+
+        const currentTablesReservations=[];
+        
+        tablesReservations.forEach(table => {
+            table.reservations.forEach(reservation => {
+                // Check if the index is within the reservation's time range
+                if (index >= reservation.start_time_index && index <= reservation.end_time_index) {
+                    // Add table_id to the reservation
+                    reservation.table_id = table.id;
+                    // Push the reservation to the currentTablesReservations array
+                    currentTablesReservations.push(reservation);
+                }
+            });
+        });
+        
+        return currentTablesReservations;
+        
+    }
+    
+    
 
     function getCurrentTime(timezone) {
         // Get current time in "hh:mm" format in Greece timezone
@@ -43,7 +83,7 @@ const Reservations = () => {
         return `${day}-${month}-${year}`; // Returning the formatted date in the format: day-month-year
     }
 
-    const {collectionKey} = useParams();
+    const {collectionKey, uid} = useParams();
 
     const [info, setInfo] = useState();
     const [maxReservationDurationIndexNumber, setMaxReservationDurationIndexNumber] = useState(0);
@@ -82,6 +122,9 @@ const Reservations = () => {
     const [currentReservation, setCurrentReservation] = useState();
     const [uniqueCategories, setUniqueCategories] = useState([]);
     const [timezone, setTimezone] = useState();
+    const [userInfo, setUserInfo] = useState();
+    const [printerIp, setPrinterIp] = useState();
+    const [printerPort, setPrinterPort] = useState();
     const [expandedMenuItems, setExpandedMenuItems] = useState([]);
 
     const [showStatePopup, setShowStatePopup] = useState(false);
@@ -108,11 +151,14 @@ const Reservations = () => {
     const [restaurantName, setRestaurantName] = useState('');
     const [reservationDuration, setReservationDuration] = useState('');
     const [numberOfDaysAvailableForBooking, setNumberOfDaysAvailableForBooking] = useState('');
+    const [centralComputerIp, setCentralComputerIp] = useState('');
 
     const [newIngredientName, setNewIngredientName] = useState('');
     const [newIngredientPrice, setNewIngredientPrice] = useState();
 
     const [showEditOpen, setShowEditOpen] = useState(false);
+
+    const [currentTablesReservations, setCurrentTablesReservations] = useState([]);
 
     const getInfoFromServer = async (collectionKey) => {
         try {
@@ -153,7 +199,20 @@ const Reservations = () => {
             setReservationDuration(response.maxReservationDurationIndexNumber);
             setNumberOfDaysAvailableForBooking(response.numberOfDaysToShowToCustomers);
             setTimezone(response.timeZone);
+            setCentralComputerIp(response.central_computer_ip);
             setSelectedDate(getCurrentDate(response.timezone));
+
+            const response2 = await fetchUserInfo(collectionKey,uid);
+            
+            console.log("User info esponse:");
+            console.log(response2);
+            
+            setUserInfo(response2);
+
+            const matchingArea = response.areas.find(area => area.id === response2.area_id);
+
+            setPrinterIp(matchingArea.printer_ip)
+            setPrinterPort(matchingArea.printer_port)
 
         } catch (error) {
             console.error("Error checking document: ", error);
@@ -187,13 +246,12 @@ const Reservations = () => {
                     setTablesReservations(response[6]);
                     setFilteredTablesReservations(response[6]);
                     setIdsOrders(response[7]);
-                    console.log("EDWWWWW")
-                    console.log(response[7])
                     setFilteredIdsOrders(response[7]);
                     setReservationsOrders(response[8]);
                     setFilteredReservationsOrders(response[8]);
+                    
                 }
-            
+                
                 setLoading(false);
 
             } catch (error) {
@@ -206,6 +264,14 @@ const Reservations = () => {
 
     }, [timezone]); // Empty dependency array ensures that the effect runs only once when the component is mounted
 
+    useEffect(() => {
+        const updateCurrentTablesReservations = () => {
+            const reservations = getCurrentTablesReservations(timezone);
+            setCurrentTablesReservations(reservations);
+        };
+
+        if (tablesReservations.length>0)updateCurrentTablesReservations();
+    }, [tablesReservations]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -243,6 +309,8 @@ const Reservations = () => {
             if (value>=1)setReservationDuration(value);
         } else if (name === 'numberOfDaysAvailableForBooking') {
             if (value>=0)setNumberOfDaysAvailableForBooking(value);
+        } else if (name === 'centralComputerIp') {
+            setCentralComputerIp(value);
         }
     };
 
@@ -756,9 +824,9 @@ const Reservations = () => {
         <div className='reservations-page'>
             <DropdownMenu changeMode={changeMode} currentMode={mode} />
             <div className="reservations-container">
-                <button className={`refresh-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={refreshData}>
+                {!showCalendar && <button className={`refresh-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={refreshData}>
                     <img src={refreshImg} alt="Refresh Icon" width="25px" color='black'/>
-                </button>
+                </button>}
                 {mode===4 && !showCalendar && 
                 <button className={`save-blue-button ${isScrollAtTop ? '' : 'hidden'}`} onClick={() => updateMenuToServer()}>
                     <img src={saveBlueImg} className={showEditOpen ? 'save-open-blue' : ''} alt="Save Icon" width="25px" color='black'/>
@@ -1020,25 +1088,25 @@ const Reservations = () => {
                                                             <p><span>Name:</span> {reservation.name}</p>
                                                             <div className='reservation-info-details'>
                                                                 <div className='reservation-info-details-row'>
-                                                                    <img className='reservation-info-button' src="../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}                                                                     <img className='reservation-info-button' src="../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />  {table.id}
+                                                                    <img className='reservation-info-button' src="../../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}                                                                     <img className='reservation-info-button' src="../../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../../icons/table.png" alt="Table Number" />  {table.id}
                                                                 </div>
                                                                 <div className='reservation-info-details-row'>
-                                                                    <img className='reservation-info-button' src="../icons/phone.png" alt="Phone Number" /> {reservation.phone}
-                                                                    {reservation.smokes !== undefined && <img className='reservation-info-button' src="../icons/smoker.png" alt="Waitlist" />}
+                                                                    <img className='reservation-info-button' src="../../icons/phone.png" alt="Phone Number" /> {reservation.phone}
+                                                                    {reservation.smokes !== undefined && <img className='reservation-info-button' src="../../icons/smoker.png" alt="Waitlist" />}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_more_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
@@ -1087,26 +1155,26 @@ const Reservations = () => {
                                                             <p><span>Name:</span> {reservation.name}</p>
                                                             <div className='reservation-info-details'>
                                                                 <div className='reservation-info-details-row'>
-                                                                    <img className='reservation-info-button' src="../icons/clock.png" alt="Phone Number" /> {timesMap[time.start_time_index]}         
-                                                                    <img className='reservation-info-button' src="../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />  {reservation.table_id}
+                                                                    <img className='reservation-info-button' src="../../icons/clock.png" alt="Phone Number" /> {timesMap[time.start_time_index]}         
+                                                                    <img className='reservation-info-button' src="../../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../../icons/table.png" alt="Table Number" />  {reservation.table_id}
                                                                 </div>
                                                                 <div className='reservation-info-details-row'>
-                                                                    <img className='reservation-info-button' src="../icons/phone.png" alt="Phone Number" /> {reservation.phone}
-                                                                    {reservation.smokes !== undefined && <img className='reservation-info-button' src="../icons/smoker.png" alt="Waitlist" />}
+                                                                    <img className='reservation-info-button' src="../../icons/phone.png" alt="Phone Number" /> {reservation.phone}
+                                                                    {reservation.smokes !== undefined && <img className='reservation-info-button' src="../../icons/smoker.png" alt="Waitlist" />}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_more_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
@@ -1155,26 +1223,26 @@ const Reservations = () => {
                                                         <p><span>Name:</span> {reservation.name}</p>
                                                         <div className='reservation-info-details'>
                                                             <div className='reservation-info-details-row'>
-                                                                <img className='reservation-info-button' src="../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}         
-                                                                <img className='reservation-info-button' src="../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />  {reservation.table_id}
+                                                                <img className='reservation-info-button' src="../../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}         
+                                                                <img className='reservation-info-button' src="../../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../../icons/table.png" alt="Table Number" />  {reservation.table_id}
                                                             </div>
                                                             <div className='reservation-info-details-row'>
-                                                                <img className='reservation-info-button' src="../icons/phone.png" alt="Phone Number" /> {reservation.phone}
-                                                                {reservation.smokes !== undefined && <img className='reservation-info-button' src="../icons/smoker.png" alt="Waitlist" />}
+                                                                <img className='reservation-info-button' src="../../icons/phone.png" alt="Phone Number" /> {reservation.phone}
+                                                                {reservation.smokes !== undefined && <img className='reservation-info-button' src="../../icons/smoker.png" alt="Waitlist" />}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_more_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
@@ -1218,11 +1286,11 @@ const Reservations = () => {
                                                         <p><span>Name:</span> {reservation.name}</p>
                                                         <div className='reservation-info-details'>
                                                             <div className='reservation-info-details-row'>
-                                                                <img className='reservation-info-button' src="../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}         
-                                                                <img className='reservation-info-button' src="../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />  {reservation.table_id}
+                                                                <img className='reservation-info-button' src="../../icons/clock.png" alt="Phone Number" /> {timesMap[reservation.start_time_index]}         
+                                                                <img className='reservation-info-button' src="../../icons/people.png" alt="Phone Number" />  {reservation.people} <img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />  {reservation.table_id}
                                                             </div>
                                                             <div className='reservation-info-details-row'>
-                                                                <img className='reservation-info-button' src="../icons/phone.png" alt="Phone Number" /> {reservation.phone}
+                                                                <img className='reservation-info-button' src="../../icons/phone.png" alt="Phone Number" /> {reservation.phone}
                                                                 {reservation.smokes !== undefined && <img className='reservation-info-button' src="../icons/smoker.png" alt="Waitlist" />}
                                                             </div>
                                                         </div>
@@ -1230,14 +1298,14 @@ const Reservations = () => {
                                                     </div>
                                                     <div className='reservation-order'>
                                                         {(reservation.state === 4) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
                                                         {(reservation.state === 5) && (
-                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}`}>
-                                                                <img className='state-img' src="../icons/order_more_button.png" alt="Order" />
+                                                            <Link to={`/order/${collectionKey}/${selectedDate}/${reservation.reservation_id}/${printerIp}/${printerPort}`}>
+                                                                <img className='state-img' src="../../icons/order_more_button.png" alt="Order" />
                                                                 <p className='state-title'>Order </p>
                                                             </Link>
                                                         )}
@@ -1260,7 +1328,7 @@ const Reservations = () => {
                                                             <span>Order: {order.order_id}</span>
                                                             <span>Name: {reservation.name}</span>
                                                             <div className='order-table-number'>
-                                                                Table: {reservation.table_id}<img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />
+                                                                Table: {reservation.table_id}<img className='reservation-info-button' src="../../icons/table.png" alt="Table Number" />
                                                             </div>
                                                         </div>
                                                     );
@@ -1300,7 +1368,7 @@ const Reservations = () => {
                                                             <span>Reservation: {order.reservation_id}</span>
                                                             <span>Name: {reservation.name}</span>
                                                             <div className='order-table-number'>
-                                                                Table: {reservation.table_id}<img className='reservation-info-button' src="../icons/table.png" alt="Table Number" />
+                                                                Table: {reservation.table_id}<img className='reservation-info-button' src="../../icons/table.png" alt="Table Number" />
                                                             </div>
                                                         </div>
                                                     );
@@ -1328,7 +1396,7 @@ const Reservations = () => {
                                     <h2>Table {table.id}</h2>
                                     <img 
                                         className={unavailableTables.includes(table.id) ? 'unavailable-img' : 'available-img'} 
-                                        src={unavailableTables.includes(table.id) ? "../icons/unavailable.png" : "../icons/available.png"} 
+                                        src={unavailableTables.includes(table.id) ? "../../icons/unavailable.png" : "../../icons/available.png"} 
                                         alt={unavailableTables.includes(table.id) ? "Unavailable" : "Available"} 
                                         onClick={() => handleToggleAvailability(table.id)} 
                                     />
@@ -1417,7 +1485,7 @@ const Reservations = () => {
                             </div>
                         )}
                         {selectedSortOption ===9 && <div className='map'>
-                            <MapComponent tables={tables} unavailableTables={unavailableTables} setTables={setTables} setUnavailableTables={setUnavailableTables}>
+                            <MapComponent tables={tables} unavailableTables={unavailableTables} currentTablesReservations={currentTablesReservations} setTables={setTables} setUnavailableTables={setUnavailableTables}>
                             </MapComponent>    
                         </div>}
                         {selectedSortOption === 10 && <div className='settings-container'>
@@ -1456,6 +1524,16 @@ const Reservations = () => {
                                         name="numberOfDaysAvailableForBooking" 
                                         placeholder="Number of days" 
                                         value={numberOfDaysAvailableForBooking} 
+                                        onChange={handleInputChange} 
+                                    />
+                                </label>
+                                <label>
+                                Central computer IP:
+                                    <input 
+                                        type="text" 
+                                        name="centralComputerIp" 
+                                        placeholder="IP" 
+                                        value={centralComputerIp} 
                                         onChange={handleInputChange} 
                                     />
                                 </label>

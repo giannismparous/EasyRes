@@ -1,10 +1,15 @@
 /* Calendar.css */
 .calendar-container {
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-    padding: 20px; /* Add padding */
-    width: 400px; /* Set width to 400px */
-    height: 370px; /* Set height to 400px */
+    border-radius: 10px;
+    /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Box shadow for depth */
+    padding: 20px;
+    /* Add padding */
+    width: 400px;
+    /* Set width to 400px */
+    height: 370px;
+    /* Set height to 400px */
     margin: 20px;
     /* background: linear-gradient(to top left, #523602, #b97902); */
     background: linear-gradient(to top left, #888888, #ffffff);
@@ -41,7 +46,8 @@
     align-items: center;
     cursor: pointer;
     /* background-color: transparent;  */
-    color: black; /* Set default text color */
+    color: black;
+    /* Set default text color */
 }
 
 
@@ -51,15 +57,17 @@
 
 
 .calendar-table {
-    margin: 0 auto; /* Center the table horizontally */
+    margin: 0 auto;
+    /* Center the table horizontally */
 }
 
 
 .calendar-table tbody tr {
-    display: flex; /* Display table rows horizontally */
+    display: flex;
+    /* Display table rows horizontally */
 }
 
-.calendar-table tbody tr td{
+.calendar-table tbody tr td {
     font-size: 30px;
 }
 
@@ -74,7 +82,7 @@
 
 .day-box:hover {
     /* background-color: white;  */
-    background-color: #007bff; 
+    background-color: #007bff;
 }
 
 .unavailable-day {
@@ -83,12 +91,17 @@
 
 /* Media query for screens smaller than 495px */
 @media screen and (max-width: 495px) {
+
     /* Calendar.css */
     .calendar-container {
-        border-radius: 10px; /* Rounded corners */
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
-        width: 300px; /* Set width to 400px */
-        height: 300px; /* Set height to 400px */
+        border-radius: 10px;
+        /* Rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* Box shadow for depth */
+        width: 300px;
+        /* Set width to 400px */
+        height: 300px;
+        /* Set height to 400px */
     }
 
     .calendar-header {
@@ -96,7 +109,7 @@
     }
 
 
-    .calendar-table tbody tr td{
+    .calendar-table tbody tr td {
         font-size: 20px;
     }
 
@@ -110,36 +123,44 @@
         align-items: center;
         cursor: pointer;
         /* background-color: transparent;  */
-        color: black; /* Set default text color */
+        color: black;
+        /* Set default text color */
     }
 }
 
 @media screen and (max-width: 390px) {
+
     /* Additional styles for screens smaller than 390px */
     .calendar {
-        padding-top: 0;
         gap: 10px
     }
 
     /* Adjustments to existing styles */
     .calendar-container {
-        width: 200px; /* Decrease width */
-        height: 220px; /* Decrease height */
+        width: 200px;
+        /* Decrease width */
+        height: 220px;
+        /* Decrease height */
         padding: 0;
     }
 
     .calendar-header {
-        font-size: 24px; /* Decrease font size */
+        font-size: 24px;
+        /* Decrease font size */
         margin-top: 15px;
     }
 
     .calendar-table tbody tr td {
-        font-size: 16px; /* Decrease font size */
+        font-size: 16px;
+        /* Decrease font size */
     }
 
     .day-box {
-        width: 22px; /* Decrease width */
-        height: 30px; /* Decrease height */
-        line-height: 25px; /* Adjust line-height */
+        width: 22px;
+        /* Decrease width */
+        height: 22px;
+        /* Decrease height */
+        line-height: 25px;
+        /* Adjust line-height */
     }
 }

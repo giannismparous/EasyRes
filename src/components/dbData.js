@@ -742,7 +742,28 @@ const infoDoc = {
     maxCapacity: 7,
     maxReservationDurationIndexNumber: 7,
     name: "Mantania",
-    timeZone: "Europe/Athens"
+    timeZone: "Europe/Athens",
+    central_computer_ip: "192.168.1.9",
+    areas: [
+        {
+            id:1,
+            name: "Main Area",
+            printer_ip: "192.168.1.XX1",
+            printer_port: "9100"
+        },
+        {
+            id:2,
+            name: "Garden",
+            printer_ip: "192.168.1.XX2",
+            printer_port: "9100"
+        },
+        {
+            id:3,
+            name: "Terrace",
+            printer_ip: "192.168.1.XX3",
+            printer_port: "9100"
+        },
+    ]
 }
 
 export default infoDoc;
