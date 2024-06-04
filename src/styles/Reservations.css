@@ -720,16 +720,6 @@
     }
 
 
-
-    .search-input {
-        flex: 1;
-        padding: 120px;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        /* Adjust border-radius to make corners more rounded */
-        font-size: 12px;
-    }
-
     .edit-button img {
         width: 28px;
     }
@@ -740,6 +730,15 @@
 
     .save-button {
         right: 35px;
+    }
+
+    .search-input[type="text"] {
+        flex: 1 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        font-size: 12px;
+        width: 50px;
     }
 
 }
@@ -1340,14 +1339,13 @@
 @media screen and (max-width: 575px) {
     .search-bar {
         width: 40%;
-        right: 105px;
     }
 }
 
 @media screen and (max-width: 370px) {
     .search-bar {
-        width: 30%;
-        left: 110px;
+        left: 70px;
+        width: 40%;
     }
 }
 
