@@ -66,13 +66,13 @@ function SamplePage({ style, redirectToSample, modelPath, sampleId, ...otherProp
     <Fragment className="sample-page-container">
       {redirectToSample && (
         <div style={{ ...containerStyle, ...style }} {...otherProps}>
-          <iframe title="3D Vista Project" src={modelPath} style={iframeStyle} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox" allowFullScreen></iframe>
+          <iframe title="3D Vista Project" src={modelPath} style={iframeStyle} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox" allow="xr-spatial-tracking; accelerometer; gyroscope; vr; fullscreen" allowFullScreen></iframe>
           <div className="overlay" style={overlayStyle} onClick={handleOverlayClick}></div>
         </div>
       )}
       {!redirectToSample && (
         <div style={{ ...containerStyle, ...style }} {...otherProps}>
-          <iframe title="3D Vista Project" src={modelPath} style={iframeStyle} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox" allowFullScreen></iframe>
+          <iframe title="3D Vista Project" src={modelPath} style={iframeStyle} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-popups allow-popups-to-escape-sandbox" allow="xr-spatial-tracking; accelerometer; gyroscope; vr; fullscreen" allowFullScreen></iframe>
         </div>
       )}
     </Fragment>

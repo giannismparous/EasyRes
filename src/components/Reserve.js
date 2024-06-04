@@ -270,7 +270,7 @@ const Reserve = () => {
   return (
     <div>
       <Helmet>
-        <title>Home - HermesView</title>  
+        <title>HermesTables</title>  
         <meta name="description" content="Make a reservation."/>
         <link rel="canonical" href="/reserve"/>
         <meta name='robots' content='noindex'/>
