@@ -1,0 +1,5 @@
+{
+  "port": 3000,
+  "sentry_key": "4000",
+  "metrics_port": 12
+}
