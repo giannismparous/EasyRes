@@ -17,7 +17,7 @@ pub enum AppError{
     Config(#[from] config::ConfigError),
     #[error("Could not start service: {0}")]
     Startup(String),
-    #[error("Could not stop service: {0}")]
+    #[error("Could not stop service")]
     TcpBind,
     #[error("Not found user with id: {0}")]
     UserNotFound(String),
@@ -29,6 +29,7 @@ impl IntoResponse for AppError {
             Self::NotFound => (StatusCode::NOT_FOUND, "Resource not Found"),
             Self::Config(_)
             | Self::Startup(_)
+            | Self::TcpBind(_)
             | Self::UserNotFound(_) => {
                 unreachable!("This error can only occur during startup")
             }
