@@ -29,7 +29,7 @@ impl IntoResponse for AppError {
             Self::NotFound => (StatusCode::NOT_FOUND, "Resource not Found"),
             Self::Config(_)
             | Self::Startup(_)
-            | Self::TcpBind(_)
+            | Self::TcpBind()
             | Self::UserNotFound(_) => {
                 unreachable!("This error can only occur during startup")
             }

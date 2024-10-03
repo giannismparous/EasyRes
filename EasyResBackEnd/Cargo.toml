@@ -18,3 +18,7 @@ http = "0.2.8"
 bytes = "1.2.1"
 http-body = "0.4.5"
 tracing-subscriber = "0.3.18"
+hyper = "0.14.30"
+
+tower-http = { version = "0.3", features = ["trace"] }
+tower-request-id = "0.2.0"
