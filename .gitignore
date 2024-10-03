@@ -30,6 +30,7 @@ EasyResBackEnd/target/
 
 # If using Cargo.lock in development only (optional, usually you want to keep it)
 /Cargo.lock
+EasyResBackEnd/Cargo.lock
 
 # Output files for binaries
 *.exe
