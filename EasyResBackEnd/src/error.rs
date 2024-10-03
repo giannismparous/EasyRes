@@ -17,7 +17,8 @@ pub enum AppError{
     Config(#[from] config::ConfigError),
     #[error("Could not start service: {0}")]
     Startup(String),
-
+    #[error("Could not stop service: {0}")]
+    TcpBind,
     #[error("Not found user with id: {0}")]
     UserNotFound(String),
 }
