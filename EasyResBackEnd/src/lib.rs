@@ -4,6 +4,7 @@ pub mod routes;
 pub mod services;
 pub mod error;
 pub mod updown;
+pub mod models;
 
 pub use crate::{
     error::AppError
