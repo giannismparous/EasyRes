@@ -22,12 +22,12 @@ use tower_request_id::{RequestId, RequestIdLayer};
 use tracing::Level;
 
 use crate::{
-  error::{AppError, Result}, routes::handler
+  error::{AppError, Result}, routes
 };
 pub fn run(
     listener: TcpListener,
 ) -> Result<Server<AddrIncoming, IntoMakeService<Router>>> {
-    let router = handler::routes();
+    let router = routes::routes();
     let app = router
         .layer(
             TraceLayer::new_for_http()
