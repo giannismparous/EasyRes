@@ -12,8 +12,13 @@ pub struct AppConfig {
     pub port: u16,
     pub sentry_key: Option<String>,
     pub metrics_port: u16,
+    pub firebase: FirebaseOpts,
 }
 
+#[derive(Deserialize, Debug, Clone)]
+pub struct FirebaseOpts {
+    pub url: String,
+}
 impl<'de> ConfigBuilder<'de> for AppConfig {
     type Config = AppConfig;
 }
