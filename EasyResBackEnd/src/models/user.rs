@@ -16,7 +16,14 @@ pub struct User {
 }
 
 impl User {
-    pub fn new(username: String, firstname: String, lastname: String, email: String, is_active: bool, is_admin: bool) -> User {
+    pub fn new(
+        username: String,
+        firstname: String,
+        lastname: String,
+        email: String,
+        is_active: bool,
+        is_admin: bool,
+    ) -> User {
         User {
             id: Some(Uuid::new_v4()),
             username,
