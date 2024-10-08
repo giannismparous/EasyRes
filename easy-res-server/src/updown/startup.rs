@@ -12,7 +12,7 @@ use tracing::Span;
 
 use hyper::{Body, Request};
 use tower_http::trace::DefaultOnRequest;
-use tower_request_id::{RequestId};
+use tower_request_id::RequestId;
 // use tracing_wrapper::tracing::{self, Level};
 use tracing::Level;
 

@@ -1,9 +1,4 @@
-use axum::{
-    http::StatusCode,
-    response::IntoResponse,
-    routing::{get},
-    Router,
-};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Router};
 
 pub fn routes() -> Router {
     Router::new().route("/", get(get_restaurants).post(create_restaurant)) // Τα routes για εστιατόρια

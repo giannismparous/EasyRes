@@ -1,9 +1,5 @@
 use axum::response::IntoResponse;
-use axum::{
-    http::StatusCode,
-    routing::{get},
-    Router,
-};
+use axum::{http::StatusCode, routing::get, Router};
 use std::sync::Arc;
 use tokio::sync::broadcast;
 
