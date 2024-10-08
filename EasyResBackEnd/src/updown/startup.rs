@@ -1,11 +1,6 @@
 use std::net::TcpListener;
-use std::net::SocketAddr;
 use {
-    axum::{
-        middleware, routing::IntoMakeService,
-        Router, Server,
-        Extension
-    },
+    axum::{routing::IntoMakeService, Extension, Router, Server},
     hyper::server::conn::AddrIncoming,
     tower_http::trace::TraceLayer,
 };
@@ -17,16 +12,18 @@ use tracing::Span;
 
 use hyper::{Body, Request};
 use tower_http::trace::DefaultOnRequest;
-use tower_request_id::{RequestId, RequestIdLayer};
+use tower_request_id::{RequestId};
 // use tracing_wrapper::tracing::{self, Level};
 use tracing::Level;
 
+use crate::firebase::client::FirebaseDB;
 use crate::{
-  error::{AppError, Result}, routes
+    error::{AppError, Result},
+    routes,
 };
-pub fn run(
-    listener: TcpListener,
-) -> Result<Server<AddrIncoming, IntoMakeService<Router>>> {
+
+pub fn run(listener: TcpListener) -> Result<Server<AddrIncoming, IntoMakeService<Router>>> {
+    let firebase = FirebaseDB::new()?;
     let router = routes::routes();
     let app = router
         .layer(
@@ -50,15 +47,15 @@ pub fn run(
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(|_request: &Request<Body>| tracing::info_span!("response"))
-                .on_response(|_response: &Response<BoxBody>, _latency: Duration, _span: &Span| {
-                    tracing::info!("response generated");
-                }),
-        );
-
-
+                .on_response(
+                    |_response: &Response<BoxBody>, _latency: Duration, _span: &Span| {
+                        tracing::info!("response generated");
+                    },
+                ),
+        )
+        .layer(Extension(firebase));
 
     Ok(axum::Server::from_tcp(listener)
         .or(Err(AppError::TcpBind))?
         .serve(app.into_make_service()))
-
 }
