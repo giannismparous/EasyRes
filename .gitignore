@@ -26,11 +26,11 @@ yarn-error.log*
 # Rust dependencies and build artifacts
 /target
 **/*.rs.bk
-EasyResBackEnd/target/
+easy-res-server/target/
 
 # If using Cargo.lock in development only (optional, usually you want to keep it)
 */Cargo.lock
-EasyResBackEnd/Cargo.lock
+easy-res-server/Cargo.lock
 
 # Output files for binaries
 *.exe

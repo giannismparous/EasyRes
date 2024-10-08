@@ -1,7 +1,7 @@
 use once_cell::sync::Lazy;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener};
 
-use EasyResBackEnd::{
+use easy_res_server::{
     config::CONFIG,
     error::{AppError, Result},
     updown::startup,
