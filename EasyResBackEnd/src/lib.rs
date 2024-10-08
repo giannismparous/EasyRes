@@ -1,11 +1,9 @@
 pub mod config;
-pub mod api;
+pub mod error;
+pub mod firebase;
+pub mod models;
 pub mod routes;
 pub mod services;
-pub mod error;
 pub mod updown;
-pub mod models;
 
-pub use crate::{
-    error::AppError
-};
+pub use crate::error::AppError;
