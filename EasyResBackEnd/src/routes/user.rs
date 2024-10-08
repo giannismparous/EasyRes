@@ -1,12 +1,12 @@
+use crate::firebase::client::FirebaseDB;
+use crate::models::user::User;
+use crate::AppError;
 use axum::{
-    Router, routing::{get, post},
     http::StatusCode,
     response::IntoResponse,
-    Json,
+    routing::{get, post},
+    Extension, Json, Router,
 };
-
-use serde_json::json;
-use crate::models::user::User;
 
 pub fn routes() -> Router {
     Router::new()
@@ -19,9 +19,9 @@ async fn get_users() -> impl IntoResponse {
 }
 
 async fn create_user(
-    Json(payload): Json<User>
-) -> impl IntoResponse {
-    tracing::warn!("eeeeeeeeeeee {:?}",payload );
-    (StatusCode::CREATED, "Return create user")
+    Extension(firebase): Extension<FirebaseDB>,
+    Json(payload): Json<User>,
+) -> Result<(), AppError> {
+    tracing::warn!("Payload: {:?}", payload);
+    firebase.create_user(&payload).await
 }
-
