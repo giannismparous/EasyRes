@@ -30,6 +30,8 @@ pub enum AppError {
     UrlParseError(#[from] firebase_rs::UrlParseError),
     #[error("Unexpected error: {0}")]
     Unexpected(String),
+    #[error("Error message: {0}")]
+    StringError(String),  // Use String instead of &str
 }
 
 impl IntoResponse for AppError {
@@ -42,6 +44,7 @@ impl IntoResponse for AppError {
             | Self::FirebaseError(_)
             | Self::UrlParseError(_)
             | Self::TcpBind
+            | Self::StringError(_)
             | Self::Unexpected(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Unexpected error"),
             Self::UserNotFound(_) => {
                 unreachable!("This error can only occur during startup")
