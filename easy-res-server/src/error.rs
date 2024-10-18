@@ -32,6 +32,10 @@ pub enum AppError {
     Unexpected(String),
     #[error("Error message: {0}")]
     StringError(String),  // Use String instead of &str
+    #[error("The username already exists: {0}")]
+    UsernameAlreadyExists(String),
+    #[error("The Email already exists: {0}")]
+    EmailAlreadyExists(String),
 }
 
 impl IntoResponse for AppError {
@@ -43,6 +47,8 @@ impl IntoResponse for AppError {
             | Self::Firebase(_)
             | Self::FirebaseError(_)
             | Self::UrlParseError(_)
+            | Self::UsernameAlreadyExists(_)
+            | Self::EmailAlreadyExists(_)
             | Self::TcpBind
             | Self::StringError(_)
             | Self::Unexpected(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Unexpected error"),
