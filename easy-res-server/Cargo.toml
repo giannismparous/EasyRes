@@ -24,7 +24,7 @@ hyper = "0.14.30"
 tower-http = { version = "0.3", features = ["trace"] }
 tower-request-id = "0.2.0"
 
-
+chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["serde", "v4"] }
 
 
