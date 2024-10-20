@@ -8,6 +8,12 @@ use axum::{
     routing::{get, post},
     Extension, Json, Router,
 };
+use crate::dtos::user::{
+    create_user_dto,
+    update_user_dto
+};
+use axum::routing::put;
+use crate::dtos::user::create_user_dto::CreateUserDTO;
 
 pub fn routes() -> Router {
     Router::new()
@@ -16,6 +22,7 @@ pub fn routes() -> Router {
         .route("/get-user-by-id/:id", get(get_user_by_id))
         .route("/get-user-by-name/:username", get(get_user_by_name))
         .route("/get-user-by-email/:email", get(get_user_by_email))
+        .route("/update-user", put(update_user))
 }
 
 async fn get_users(
@@ -31,7 +38,7 @@ async fn get_users(
 
 async fn create_user(
     Extension(firebase): Extension<FirebaseDB>,
-    Json(payload): Json<User>,
+    Json(payload): Json<CreateUserDTO>,
 ) -> Result<(), AppError> {
     tracing::warn!("Payload: {:?}", payload);
     firebase.create_user(&payload).await
@@ -66,4 +73,12 @@ async fn get_user_by_email(
         return Err(AppError::UserNotFound(email))
     }
     Ok(Json(response.unwrap()))
+}
+
+async fn update_user(
+    Extension(firebase): Extension<FirebaseDB>,
+    Json(user): Json<User>,
+) -> Result<StatusCode, AppError> {
+    // firebase
+    Ok(StatusCode::OK)
 }
