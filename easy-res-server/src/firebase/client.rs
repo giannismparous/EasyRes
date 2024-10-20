@@ -6,6 +6,7 @@ use axum::response::Response;
 use config::ConfigError;
 use firebase_rs::Firebase;
 use once_cell::sync::Lazy;
+use crate::dtos::user::create_user_dto::CreateUserDTO;
 
 static POOLS: Lazy<Result<Arc<Firebase>, AppError>> = Lazy::new(|| {
     let config_1 = Lazy::force(&CONFIG)
@@ -31,20 +32,20 @@ impl FirebaseDB {
         Ok(FirebaseDB { firebase })
     }
 
-    pub async fn create_user(&self, user: &User) -> Result<(), AppError> {
+    pub async fn create_user(&self, new_user: &CreateUserDTO) -> Result<(), AppError> {
         let users = self.get_users().await?;
         for (_, existing_user) in users.iter() {
-            if existing_user.username == user.username {
-                return Err(AppError::UsernameAlreadyExists(user.username.clone()));
+            if existing_user.username == new_user.username {
+                return Err(AppError::UsernameAlreadyExists(new_user.username.clone()));
             }
-            if existing_user.email == user.email {
-                return Err(AppError::EmailAlreadyExists(user.email.clone()));
+            if existing_user.email == new_user.email {
+                return Err(AppError::EmailAlreadyExists(new_user.email.clone()));
             }
         }
 
         let firebase_ref = self.firebase.at("users");
 
-        let response = firebase_ref.set::<User>(user).await?;
+        let response = firebase_ref.set::<CreateUserDTO>(new_user).await?;
         tracing::info!("user created: {:?}", response);
 
         Ok(())
@@ -89,5 +90,16 @@ impl FirebaseDB {
             }
         }
         Ok(None)
+    }
+
+    pub async fn update_user(&self, user: &User) -> Result<(), AppError> {
+        let firebase_ref = self.firebase.at(&format!("users/{}", user.id));
+
+        let user = firebase_ref
+            .get::<User>()  // Expect to retrieve a User from Firebase
+            .await          // Await the async operation
+            .map_err(|err| AppError::UserNotFound(err.to_string()))?;
+
+        Ok(())
     }
 }
